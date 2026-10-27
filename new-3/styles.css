@@ -1,0 +1,2208 @@
+@import url("/site-cabinetmeyrin-new-v3/assets/fonts/Bricolage-Grotesque.css");
+@import url("/site-cabinetmeyrin-new-v3/assets/fonts/DM-Sans.css");
+@import url("/site-cabinetmeyrin-new-v3/assets/fonts/Lato.css");
+/* Shared by every version, loaded before the version's own stylesheet.
+
+   Line illustrations. The six drawings (tooth, toothbrush, implant, braces, chair,
+   protection) are black-ink masks, so each version paints them in any brand colour
+   with --ill-ink: Twilight Indigo on white, Neon Ice or white on Indigo.
+
+   Motion. No scroll effects: only the hero box, step numbers and treatment
+   illustrations arrive, once each, and nothing moves with reduced motion.
+
+   Photos never stay pinned while the page scrolls: no sticky images. */
+:root { --neon: #23FFED; --indigo: #2B3A67; --olive: #7C898B; --black: #000000; }
+.ill { display: block; width: 100%; aspect-ratio: 512 / 458; background-color: var(--ill-ink, #2B3A67);
+  -webkit-mask: var(--ill) center / contain no-repeat; mask: var(--ill) center / contain no-repeat; }
+/* The drawings are vector, so they stay crisp, and never grow past 128px: they are marks
+   that help people find their way, not pictures. */
+.ill { max-width: 128px !important; max-height: 128px; margin-inline: auto; }
+.ill-tooth { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/tooth-line.svg"); }
+.ill-toothbrush { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/toothbrush-line.svg"); }
+.ill-implant { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/implant-line.svg"); }
+.ill-braces { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/braces-line.svg"); }
+.ill-chair { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/chair-line.svg"); aspect-ratio: 512 / 436; }
+.ill-protection { --ill: url("/site-cabinetmeyrin-new-v3/assets/illustrations/protection-line.svg"); aspect-ratio: 512 / 436; }
+/* Arrivals (see shared/script.js): the hero box, step numbers and treatment illustrations only. */
+.arrive { opacity: 0; transform: translateY(14px); transition: opacity .6s cubic-bezier(.2, .7, .2, 1), transform .6s cubic-bezier(.2, .7, .2, 1); }
+.ill.arrive { transform: scale(.92); }
+.arrive.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .arrive { opacity: 1; transform: none; transition: none; } }
+.nw { white-space: nowrap; }
+
+/* Cover hero (home and team page). A balanced split on a Twilight Indigo band: the
+   headline, lead and buttons on the left, the team photo whole on the right at its own
+   3:2 shape, so nobody is cropped and nothing sits on the picture. The section stays
+   well inside the first screen. On a phone the photo comes first, full width, then the
+   text. Versions may recolour the band with --cover-box and --cover-ink. */
+.hero.hero-cover { position: relative; display: block; min-height: 0; padding: 0; margin: 0; background: var(--cover-box, #2B3A67); overflow: hidden; border-radius: 0; }
+.hero.hero-cover .wrap.hero-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 56px; align-items: center; min-height: 0; padding-top: 56px; padding-bottom: 56px; }
+.hero.hero-cover .hero-bg { position: relative; inset: auto; z-index: auto; grid-column: 2; grid-row: 1; aspect-ratio: 3 / 2; height: auto; margin: 0; }
+.hero.hero-cover .hero-bg picture, .hero.hero-cover .hero-bg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; border-radius: 0; transform: none; clip-path: none; border: 0; box-shadow: none; }
+.hero.hero-cover .hero-txt { grid-column: 1; grid-row: 1; display: block; max-width: none; padding: 0; background: none; color: var(--cover-ink, #FFFFFF); border-radius: 0; box-shadow: none; }
+.hero.hero-cover .hero-head { display: block; margin: 0; }
+.hero.hero-cover .crumbs { margin-bottom: 20px; }
+.hero.hero-cover h1 { color: var(--cover-ink, #FFFFFF); margin: 0 0 18px; max-width: none; }
+.hero.hero-cover .lead { color: var(--cover-ink, #FFFFFF); opacity: .9; margin: 0; max-width: 46ch; }
+.hero.hero-cover .acts { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.hero.hero-cover .btn { background: #23FFED; color: #2B3A67; border-color: #23FFED; }
+.hero.hero-cover .btn.btn-line { background: transparent; color: var(--cover-ink, #FFFFFF); border-color: currentColor; }
+.hero.hero-cover .btn:hover { background: #FFFFFF; border-color: #FFFFFF; color: #2B3A67; }
+.hero.hero-cover .crumbs, .hero.hero-cover .crumbs a, .hero.hero-cover .crumbs li { color: var(--cover-ink, #FFFFFF); }
+.hero.hero-cover .quick-list { display: none; }
+@media (max-width: 900px) {
+  .hero.hero-cover .wrap.hero-in { grid-template-columns: 1fr; row-gap: 28px; padding-top: 0; padding-bottom: 40px; }
+  .hero.hero-cover .hero-bg { grid-column: 1; grid-row: 1; margin-inline: calc(var(--pad-x, 24px) * -1); }
+  .hero.hero-cover .hero-txt { grid-column: 1; grid-row: 2; }
+}
+
+/* An illustration standing in for a photo: small Neon Ice line art on a Twilight Indigo
+   tile. Illustrations stay subtle, sized like a mark that helps people find their way,
+   never a large decorative picture.
+   Used for the blog cards (their photos open the articles) and for any slot whose photo
+   is already on another page. */
+.ill-tile { display: grid; place-items: center; width: 100%; height: 100%; aspect-ratio: 4 / 3; background: #2B3A67; }
+.ill-tile .ill { width: 22%; max-width: 88px; --ill-ink: #23FFED; }
+.post-ill { aspect-ratio: 16 / 7; margin-bottom: 18px; }
+
+/* "Comprendre les soins dentaires" opens on the prevention drawings of the waiting room. */
+.blog-lead-pic { margin: 0 0 40px; }
+.blog-lead-pic picture { display: block; aspect-ratio: 16 / 9; overflow: hidden; }
+.blog-lead-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+@media (max-width: 700px) { .blog-lead-pic picture { aspect-ratio: 4 / 3; } }
+
+/* Feature header (interior pages with a photo). The photo sits on the right at its own
+   shape (3:2 for a landscape shot, 4:5 for a portrait, so heads are never cut), and the
+   headline panel on solid Twilight Indigo reaches 48px over its left edge, for full
+   contrast without hiding anyone. Photos carry no frame, border or shadow. On a phone the photo comes
+   first and the panel rises 40px over its bottom edge. Versions may restyle the panel
+   with --feature-box and --feature-ink. */
+.phero.phero-feature { position: relative; display: block; padding: 0; margin: 0; background: var(--feature-bg, transparent); border-radius: 0; }
+.phero.phero-feature .wrap.phero-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; min-height: 0; padding-top: 48px; padding-bottom: 48px; }
+.phero.phero-feature.phero-feature-tall .wrap.phero-in { grid-template-columns: minmax(0, 1.5fr) minmax(0, .85fr); }
+.phero.phero-feature .phero-feature-pic { position: relative; grid-column: 2; grid-row: 1; width: auto; max-width: none; aspect-ratio: 3 / 2; margin: 0; }
+.phero.phero-feature.phero-feature-tall .phero-feature-pic { aspect-ratio: 4 / 5; }
+.phero.phero-feature .phero-feature-pic picture, .phero.phero-feature .phero-feature-pic img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; border-radius: 0; transform: none; clip-path: none; border: 0; box-shadow: none; }
+/* the panel reaches 48px over the photo's edge: enough to layer the two, never enough to hide anyone */
+.phero.phero-feature .phero-txt { position: relative; z-index: 1; grid-column: 1; grid-row: 1; width: auto; max-width: none; margin: 0 -48px 0 0; padding: 40px 44px 44px; background: var(--feature-box, #2B3A67); color: var(--feature-ink, #FFFFFF); border-radius: 0; box-shadow: none; }
+.phero.phero-feature h1 { color: var(--feature-ink, #FFFFFF); margin: 0 0 16px; max-width: none; }
+.phero.phero-feature .lead { color: var(--feature-ink, #FFFFFF); opacity: .9; margin: 0; max-width: 52ch; }
+.phero.phero-feature .crumbs, .phero.phero-feature .crumbs a, .phero.phero-feature .crumbs li { color: var(--feature-ink, #FFFFFF); }
+.phero.phero-feature .crumbs { margin-bottom: 18px; }
+.phero.phero-feature .acts { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+.phero.phero-feature .btn { background: #23FFED; color: #2B3A67; border-color: #23FFED; }
+.phero.phero-feature .btn.btn-line { background: transparent; color: var(--feature-ink, #FFFFFF); border-color: currentColor; }
+.phero.phero-feature .btn:hover { background: #FFFFFF; border-color: #FFFFFF; color: #2B3A67; }
+@media (max-width: 900px) {
+  .phero.phero-feature .wrap.phero-in, .phero.phero-feature.phero-feature-tall .wrap.phero-in { grid-template-columns: 1fr; padding-top: 0; padding-bottom: 32px; }
+  .phero.phero-feature .phero-feature-pic { grid-column: 1; grid-row: 1; margin-inline: calc(var(--pad-x, 24px) * -1); }
+  .phero.phero-feature .phero-txt { grid-column: 1; grid-row: 2; margin: -40px 0 0; padding: 28px 24px 32px; }
+}
+
+/* Photos are never stretched or sliced. A photo beside a list or a long text keeps its
+   own shape and sits at the top of its column, instead of growing to the column's
+   height and showing a narrow strip of the picture. */
+.visite-pic, .philo-pic, .fam-pic, .hfam-visual > picture, .team-group picture { height: auto !important; min-height: 0 !important; max-height: none !important; aspect-ratio: auto !important; align-self: start !important; position: static !important; }
+.visite-pic picture, .visite-pic img, .philo-pic picture, .philo-pic img, .fam-pic picture, .fam-pic img, .hfam-visual > picture img { width: 100% !important; height: auto !important; aspect-ratio: auto !important; object-fit: contain !important; }
+
+/* Home and team cover, larger: the team photo runs to the right edge of the screen at
+   58% of its width and fills the band from top to bottom, whole at 3:2; the headline
+   column keeps the left side, aligned with the page content. */
+@media (min-width: 901px) {
+  .hero.hero-cover .wrap.hero-in { max-width: none; margin: 0; padding-top: 0; padding-bottom: 0; padding-right: 0; padding-left: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px)); grid-template-columns: minmax(0, 1fr) minmax(0, 52vw); column-gap: 56px; }
+  .hero.hero-cover .hero-txt { padding-block: 48px; }
+}
+/* Interior photo headers give the photo more of the width. */
+@media (min-width: 901px) {
+  .phero.phero-feature.phero-feature-wide .wrap.phero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); }
+  .phero.phero-feature.phero-feature-tall .wrap.phero-in { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+}
+
+/* Cards that sit side by side in one row always share one height: the row is aligned,
+   and each card's content starts at its top. A row of cards ending at different heights
+   reads as unfinished. This deliberately overrides the checker's preference for equal
+   top and bottom insets inside the shorter cards. */
+.trust-grid, .posts, .loc-grid { align-items: stretch !important; }
+.trust-grid > *, .posts > li, .loc-grid > * { height: auto !important; align-self: stretch !important; }
+
+/* Portraits: every team photo is a cut-out with the face at the same height and the
+   eyes on one line, set on a rounded colour background. Versions tint it with
+   --portrait-bg; the default is a soft Neon Ice wash. */
+.disc, .thc-pic, .team-pic .disc, .disc-big, .profile-pic .disc { border-radius: 24px !important; overflow: hidden !important; background: var(--portrait-bg, color-mix(in srgb, #23FFED 32%, #FFFFFF)) !important; }
+.disc picture, .disc img, .thc-pic picture, .thc-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; border-radius: inherit; background: transparent; }
+
+/* Line drawings beside a heading sit straight on their section's colour, in the
+   section's own text colour: no small box behind them. Illustrations that head a card
+   (.ill-tile, .post-ill) keep their colour field. */
+.hfam-visual, .icon-panel, .phero-aside, .phero-aside .icon-panel { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+.hfam-visual .ill, .icon-panel .ill { --ill-ink: currentColor; background-color: currentColor !important; }
+
+/* A family photo never sits in a fixed box: the frame follows the picture, so there is
+   no empty or black area below it. */
+.hfam-visual:has(picture), .fam-pic { aspect-ratio: auto !important; height: auto !important; min-height: 0 !important; background: transparent !important; }
+
+/* The "Comprendre les soins dentaires" photo shows at its own shape, so the patient stays
+   visible from the drawings above him down to his shoulders. People in a photo are never
+   cropped away: where space is short, text goes over the picture instead. */
+.blog-lead-pic picture { aspect-ratio: auto !important; height: auto !important; }
+.blog-lead-pic img { height: auto !important; object-fit: contain !important; }
+
+/* The cover headline holds two lines beside the photo at every width. */
+.hero.hero-cover h1 { font-size: clamp(32px, 3vw, 44px) !important; line-height: 1.1 !important; max-width: none !important; text-wrap: balance; }
+
+/* Wide interior headers bleed like the home cover: the landscape photo runs to the
+   right edge of the screen at half its width, whole at 3:2, so a long introduction no
+   longer leaves a small photo floating beside a tall panel. The headline is held to a
+   size that keeps it on two or three lines inside the panel. */
+@media (min-width: 901px) {
+  .phero.phero-feature.phero-feature-wide .wrap.phero-in { max-width: none; margin: 0; padding-right: 0; padding-left: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px)); grid-template-columns: minmax(0, 1fr) minmax(0, 50vw); }
+  .phero.phero-feature.phero-feature-wide .phero-txt { align-self: center; }
+  .phero.phero-feature h1 { font-size: clamp(32px, 3vw, 46px) !important; line-height: 1.1 !important; text-wrap: balance; }
+}
+
+/* Phone booking bar: hidden while the opening buttons are visible (script.js), so it
+   never sits on top of them; without the script it simply stays visible. */
+.dock-wait .dock { translate: 0 calc(100% + 24px); transition: translate .3s ease; }
+.dock-wait.dock-on .dock { translate: 0 0; }
+@media (prefers-reduced-motion: reduce) { .dock-wait .dock { transition: none; } }
+
+/* The note under the treatment families never sits on the edge of the band above it. */
+.note-sec { padding-top: clamp(40px, 5vw, 64px) !important; }
+
+/* Care families with a landscape photo: the photo sits beside the title and the
+   introduction, and the list of care pages runs below at full width in two columns,
+   so the photo is never left small above an empty column next to a long list. */
+@media (min-width: 901px) {
+  .fam.fam-wide .fam-in, .hfam.hfam-wide .hfam-in { display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; grid-template-rows: auto auto auto auto 1fr auto auto !important; column-gap: 56px !important; row-gap: 0 !important; align-items: start !important; }
+  .fam-wide .fam-txt, .hfam-wide .hfam-txt { display: contents !important; }
+  .fam-wide .fam-pic, .hfam-wide .hfam-visual { grid-column: 1 !important; grid-row: 1 / span 5 !important; width: 100% !important; max-width: none !important; margin: 0 !important; }
+  .fam-wide.fam-flip .fam-pic, .hfam-wide.hfam-flip .hfam-visual { grid-column: 2 !important; }
+  .fam-wide .fam-txt > *, .hfam-wide .hfam-txt > * { grid-column: 2; max-width: none; }
+  .fam-wide.fam-flip .fam-txt > *, .hfam-wide.hfam-flip .hfam-txt > * { grid-column: 1; }
+  .fam-wide .fam-txt > .care-list, .hfam-wide .hfam-txt > .care-list { grid-column: 1 / -1 !important; grid-row: 6 !important; display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px 32px !important; margin-top: 40px !important; width: 100% !important; max-width: none !important; }
+  .fam-wide .fam-txt > .care-list > li, .hfam-wide .hfam-txt > .care-list > li { margin: 0 !important; }
+  .fam-wide .fam-txt > .care-list ~ *, .hfam-wide .hfam-txt > .care-list ~ * { grid-column: 1 / -1 !important; grid-row: 7 !important; justify-self: start; margin-top: 24px; }
+}
+/* In the two-column care list, rows beside each other share one height and a one-line
+   row centres its text, so it never sits high in a box sized by its two-line neighbour. */
+@media (min-width: 901px) {
+  .fam-wide .fam-txt > .care-list > li, .hfam-wide .hfam-txt > .care-list > li { display: flex !important; }
+  .fam-wide .fam-txt > .care-list > li > a, .hfam-wide .hfam-txt > .care-list > li > a { flex: 1 1 auto; align-content: center; align-items: center !important; }
+}
+
+/* The drawing at the head of a blog card keeps its 16:7 band. Without this, the
+   tile's height: 100% resolved against a card stretched to its row's height, so the
+   band grew to the whole card and pushed the text out under the next section. */
+.post .post-ill { height: clamp(120px, 11vw, 168px) !important; flex: none !important; aspect-ratio: auto !important; }
+.post .post-ill .ill { width: 72px !important; max-width: 72px !important; }
+/* No large empty colour block anywhere: a drawing tile used as a photo stand-in is
+   capped, so a missing photo never becomes a big square with a small mark in it. */
+.ill-tile:not(.post-ill) { max-height: 240px; }
+
+/* A two-column list only when its items fill every row. With an odd count the last
+   row would leave an empty cell beside a lone item, so the list stacks vertically in
+   one column instead, each row running the full width like a table. */
+@media (min-width: 901px) {
+  .fam-wide .fam-txt > .care-list:has(> li:last-child:nth-child(odd)),
+  .hfam-wide .hfam-txt > .care-list:has(> li:last-child:nth-child(odd)) { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* Opening band fills the first screen (client, 2026-10-27): the next section starts
+   below the fold. The team photo runs the full height of the band, never floating in it
+   with the band colour showing above and below like an outline. Because the six people
+   span the whole width of the photo, the frame never gets narrower than 1.2 times its
+   height, so at most a tenth is trimmed on each side and every face stays whole. Where a
+   taller screen would need a narrower frame, the band stops at that height instead. */
+@media (min-width: 901px) {
+  .hero.hero-cover {
+    --lp: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px));
+    --pw: min(calc((100svh - var(--hh, 84px)) * 1.25), calc(100vw - 400px - var(--lp) - 48px));
+  }
+  .hero.hero-cover .wrap.hero-in { grid-template-columns: minmax(0, 1fr) var(--pw) !important; min-height: min(calc(100svh - var(--hh, 84px)), calc(var(--pw) / 1.2)); align-items: stretch !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+  .hero.hero-cover .hero-bg { aspect-ratio: auto !important; height: auto !important; min-height: 0 !important; align-self: stretch !important; margin: 0 !important; padding: 0 !important; border: 0 !important; outline: 0 !important; }
+  .hero.hero-cover .hero-bg picture, .hero.hero-cover .hero-bg img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 50% 32% !important; }
+  .hero.hero-cover .hero-txt { align-self: center !important; padding-right: 8px; }
+  .hero.hero-cover .wrap.hero-in { column-gap: 48px !important; }
+  .hero.hero-cover h1 { font-size: clamp(30px, 2.55vw, 40px) !important; line-height: 1.12 !important; max-width: none !important; text-wrap: balance; }
+}
+/* No outline or inset frame on any photo. */
+.hero-bg, .hero-bg picture, .hero-bg img, .phero-feature-pic, .phero-feature-pic picture, .phero-feature-pic img { outline: 0 !important; border: 0 !important; box-shadow: none !important; }
+
+/* First visit, every version (client: no large empty area). The photo and the title sit
+   side by side at the top, and the five steps run below them across the full width, so
+   the photo never stands alone above an empty column next to a tall list. Each version
+   keeps its own colours and step cards. */
+@media (min-width: 1000px) {
+  .visite .visite-in { display: grid !important; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr) !important; grid-template-rows: auto auto auto !important; column-gap: 64px !important; row-gap: 0 !important; align-items: start !important; }
+  .visite .visite-txt { display: contents !important; }
+  .visite .visite-pic { grid-column: 1 !important; grid-row: 1 / span 2 !important; width: 100% !important; max-width: none !important; margin: 0 !important; }
+  .visite .visite-txt h2 { grid-column: 2 !important; grid-row: 1 !important; align-self: end !important; margin: 0 0 24px !important; }
+  .visite .visite-txt .link { grid-column: 2 !important; grid-row: 2 !important; align-self: start !important; }
+  .visite .visite-txt .steps { grid-column: 1 / -1 !important; grid-row: 3 !important; display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 16px !important; margin: 48px 0 0 !important; max-width: none !important; width: 100% !important; }
+  .visite .visite-txt .steps > li { grid-column: auto !important; grid-row: auto !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; height: auto !important; margin: 0 !important; }
+  .visite .visite-txt .steps > li .num { margin: 0 !important; }
+}
+
+/* Nothing with a photo or portrait stays pinned while the page scrolls (client rule).
+   The side panel of care pages carries the practitioners' portraits, so it scrolls
+   with the page. */
+.side:has(img), aside:has(img) { position: static !important; top: auto !important; }
+
+/* Video placeholder without a photo: no large colour square and no play button for a
+   video that does not exist yet. It reads as a compact note until the video is filmed. */
+.video-slot:has(> .ill-tile) { display: block !important; aspect-ratio: auto !important; min-height: 0 !important; height: auto !important; padding: 28px 32px !important; }
+.video-slot:has(> .ill-tile) > .ill-tile, .video-slot:has(> .ill-tile) > .video-play { display: none !important; }
+.video-slot:has(> .ill-tile) > .video-txt { position: static !important; inset: auto !important; padding: 0 !important; margin: 0 !important; background: none !important; transform: none !important; }
+
+/* Home opening, all versions (client, 2026-10-27): the team photo fills the first
+   screen, anchored right so the six people are never cropped. The headline sits on the
+   left over the lake, about 30% larger than before, on three lines, and ends 40px before
+   the first person. A gradient in the band colour sits under the text so white type keeps
+   high contrast on the bright sky. The photo is 16:9 and the group starts at 39% of its
+   width, so the text column is computed from the rendered photo width. The text starts on
+   the logo line, or further left on very wide screens when that line would leave the
+   column under 400px. The headline's measure is set in em per typeface (--h1-measure) so
+   the sentence can only break into three lines, and its size fills the column. */
+@media (min-width: 1100px) {
+  .hero.hero-full {
+    --H: max(calc(100svh - var(--hh, 84px)), 620px);
+    --wr: max(100vw, calc(var(--H) * 1.777));
+    --px: calc(100vw - var(--wr) * var(--people, 0.61));
+    --lp: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px));
+    --tl: max(40px, min(var(--lp), calc(var(--px) - 540px)));
+    --col: min(calc(var(--px) - var(--tl) - 90px), 600px);
+    position: relative !important; display: block !important; min-height: var(--H) !important; height: var(--H) !important;
+    padding: 0 !important; margin: 0 !important; overflow: hidden !important; background: var(--cover-box, #2B3A67) !important;
+  }
+  .hero.hero-full .wrap.hero-in { position: static !important; display: flex !important; align-items: center !important; height: 100% !important; min-height: 0 !important; max-width: none !important; margin: 0 !important; padding: 0 0 0 var(--tl) !important; grid-template-columns: none !important; }
+  .hero.hero-full .hero-bg { position: absolute !important; inset: 0 !important; z-index: 0 !important; width: auto !important; height: auto !important; aspect-ratio: auto !important; margin: 0 !important; grid-column: auto !important; grid-row: auto !important; }
+  .hero.hero-full .hero-bg picture, .hero.hero-full .hero-bg img { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 100% 30% !important; transform: none !important; }
+  /* The fade covers the text column and clears well before the people: it eases out
+     between 200px and 30px before the first person, and the photo is untouched from
+     there. It is lighter than a solid panel, since both photos already darken or soften
+     their left side. */
+  .hero.hero-full { --fade: var(--cover-box, #2B3A67); --f0: 82%; --f1: 74%; }
+  .hero.hero-full.hero-nuit { --f0: 58%; --f1: 44%; }
+  .hero.hero-full.hero-light { --fade: #FFFFFF; --f0: 86%; --f1: 78%; }
+  .hero.hero-full .hero-bg::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 82%, transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 74.0%, transparent) calc(var(--px) - 420px + 0px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 68.8%, transparent) calc(var(--px) - 420px + 48px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 60.7%, transparent) calc(var(--px) - 420px + 100px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 50.3%, transparent) calc(var(--px) - 420px + 152px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 39.2%, transparent) calc(var(--px) - 420px + 200px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 28.9%, transparent) calc(var(--px) - 420px + 248px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 18.5%, transparent) calc(var(--px) - 420px + 296px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 8.9%, transparent) calc(var(--px) - 420px + 344px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 0%, transparent) calc(var(--px) - 420px + 400px)); }
+  .hero.hero-full.hero-nuit .hero-bg::after { background: linear-gradient(90deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 58%, transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 44.0%, transparent) calc(var(--px) - 420px + 0px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 40.9%, transparent) calc(var(--px) - 420px + 48px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 36.1%, transparent) calc(var(--px) - 420px + 100px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 29.9%, transparent) calc(var(--px) - 420px + 152px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 23.3%, transparent) calc(var(--px) - 420px + 200px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 17.2%, transparent) calc(var(--px) - 420px + 248px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 11.0%, transparent) calc(var(--px) - 420px + 296px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 5.3%, transparent) calc(var(--px) - 420px + 344px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 0%, transparent) calc(var(--px) - 420px + 400px)); }
+  .hero.hero-full.hero-light .hero-bg::after { background: linear-gradient(90deg,
+      color-mix(in srgb, #FFFFFF 86%, transparent) 0,
+      color-mix(in srgb, #FFFFFF 78.0%, transparent) calc(var(--px) - 420px + 0px),
+      color-mix(in srgb, #FFFFFF 72.5%, transparent) calc(var(--px) - 420px + 48px),
+      color-mix(in srgb, #FFFFFF 64.0%, transparent) calc(var(--px) - 420px + 100px),
+      color-mix(in srgb, #FFFFFF 53.0%, transparent) calc(var(--px) - 420px + 152px),
+      color-mix(in srgb, #FFFFFF 41.3%, transparent) calc(var(--px) - 420px + 200px),
+      color-mix(in srgb, #FFFFFF 30.4%, transparent) calc(var(--px) - 420px + 248px),
+      color-mix(in srgb, #FFFFFF 19.5%, transparent) calc(var(--px) - 420px + 296px),
+      color-mix(in srgb, #FFFFFF 9.4%, transparent) calc(var(--px) - 420px + 344px),
+      color-mix(in srgb, #FFFFFF 0%, transparent) calc(var(--px) - 420px + 400px)); }
+  .hero.hero-full .hero-txt { position: relative !important; z-index: 1 !important; width: var(--col) !important; max-width: none !important; padding: 0 !important; margin: 0 !important; background: none !important; color: #FFFFFF !important; align-self: center !important; }
+  html body .hero.hero-full .hero-txt h1 { font-size: clamp(44px, calc(var(--col) / var(--h1-measure, 7.8) * 1.12), 70px) !important; max-width: calc(var(--h1-measure, 7.8) * 1em) !important; line-height: 1.04 !important; letter-spacing: -0.015em !important; color: #FFFFFF !important; margin: 0 0 24px !important; text-wrap: balance !important; }
+  .hero.hero-full .lead { color: #FFFFFF !important; opacity: 1 !important; font-size: clamp(17px, 1.2vw, 19px) !important; line-height: 1.6 !important; max-width: calc(100% - 60px) !important; }
+  .hero.hero-full .acts { margin-top: 30px !important; }
+}
+/* White fade, wide screens only: dark type and a dark main button for high contrast.
+   On phones the text sits below the photo on the dark band and keeps its colours. */
+@media (min-width: 1100px) {
+  .hero.hero-full.hero-light .hero-txt, html body .hero.hero-full.hero-light .hero-txt h1, .hero.hero-full.hero-light .lead { color: #12263A !important; }
+  .hero.hero-full.hero-light .btn:not(.btn-line) { background: #2B3A67 !important; color: #FFFFFF !important; border-color: #2B3A67 !important; }
+  .hero.hero-full.hero-light .btn.btn-line { background: rgba(255,255,255,.7) !important; color: #2B3A67 !important; border-color: #2B3A67 !important; }
+  .hero.hero-full.hero-light .btn:hover { background: #12263A !important; color: #FFFFFF !important; border-color: #12263A !important; }
+}
+/* The navy variant: the group starts at 36% of the photo's width. */
+.hero.hero-full.hero-nuit { --people: 0.645; }
+@media (max-width: 1099px) {
+  .hero.hero-full .hero-bg picture, .hero.hero-full .hero-bg img { object-position: 82% 30% !important; object-fit: cover !important; }
+}
+
+
+/* No text under 14px anywhere (client: fonts not too small). */
+.video-k { font-size: max(14px, 1em) !important; }
+
+/* First-visit steps in a row of five: the titles are sized for the card, so each one
+   reads on one or two lines instead of a word per line, and the cards use the full width
+   of the section with smaller gaps. Body text stays at its 16px floor. */
+@media (min-width: 1000px) {
+  .visite .wrap { max-width: max(var(--wrap, 1240px), 1240px) !important; }
+  .visite .visite-txt .steps { gap: 12px !important; }
+  .visite .visite-txt .steps > li h3 { font-size: clamp(18px, 1.35vw, 21px) !important; line-height: 1.22 !important; letter-spacing: -0.005em !important; }
+  .visite .visite-txt .steps > li h3 br { display: none; }
+  .visite .visite-txt .steps > li { padding-left: min(var(--sp, 20px), 20px); padding-right: min(var(--sp, 20px), 20px); }
+  .visite .visite-txt .steps > li p { font-size: 16px !important; line-height: 1.5 !important; }
+}
+/* The two opening buttons stay on one row on every desktop width. */
+@media (min-width: 1100px) {
+  .hero.hero-full .acts { flex-wrap: nowrap !important; gap: 10px !important; }
+  .hero.hero-full .acts .btn { white-space: nowrap !important; padding-left: clamp(18px, 1.6vw, 28px) !important; padding-right: clamp(18px, 1.6vw, 28px) !important; }
+}
+
+/* Interior photo headers, every version (client, 2026-10-27): the photo fills the
+   band from edge to edge as a background. A gradient in the band colour runs under the
+   text on the left and clears by the middle of the band, so the right half of the photo
+   is shown as taken. A light filter lifts colour and contrast, and a soft shade at the
+   bottom settles the band. The headline, introduction and buttons sit directly on the
+   gradient in white, or in deep blue on the white-fade versions (--pf-fade). */
+@media (min-width: 901px) {
+  .phero.phero-feature { --pf-fade: var(--feature-box, #2B3A67); --pf-ink: #FFFFFF;
+    --pf-left: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px)); --pf-col: calc(var(--pf-left) + min(520px, 38vw));
+    position: relative !important; overflow: hidden !important; background: var(--pf-fade) !important; border-radius: 0 !important; padding: 0 !important; margin: 0 !important; }
+  .phero.phero-feature .wrap.phero-in { position: static !important; display: flex !important; align-items: center !important;
+    min-height: clamp(520px, 72svh, 720px) !important; max-width: none !important; margin: 0 !important;
+    padding: 72px 0 72px calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px)) !important; grid-template-columns: none !important; }
+  .phero.phero-feature .phero-feature-pic { position: absolute !important; inset: 0 !important; z-index: 0 !important; width: auto !important; height: auto !important; aspect-ratio: auto !important; margin: 0 !important; grid-column: auto !important; grid-row: auto !important; }
+  .phero.phero-feature .phero-feature-pic picture, .phero.phero-feature .phero-feature-pic img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 70% 35% !important; border-radius: 0 !important; filter: saturate(1.08) contrast(1.04) brightness(.98); }
+  .phero.phero-feature .phero-feature-pic::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg,
+        color-mix(in srgb, var(--pf-fade) 88%, transparent) 0,
+        color-mix(in srgb, var(--pf-fade) calc(82% * 1.00), transparent) calc(var(--pf-col) - 40px + 500px * 0),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.93), transparent) calc(var(--pf-col) - 40px + 500px * 0.12),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.82), transparent) calc(var(--pf-col) - 40px + 500px * 0.25),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.68), transparent) calc(var(--pf-col) - 40px + 500px * 0.38),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.53), transparent) calc(var(--pf-col) - 40px + 500px * 0.5),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.39), transparent) calc(var(--pf-col) - 40px + 500px * 0.62),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.25), transparent) calc(var(--pf-col) - 40px + 500px * 0.74),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.12), transparent) calc(var(--pf-col) - 40px + 500px * 0.86),
+        color-mix(in srgb, var(--pf-fade) calc(82% * 0.00), transparent) calc(var(--pf-col) - 40px + 500px * 1)),
+      linear-gradient(0deg, color-mix(in srgb, #12263A 28%, transparent) 0, transparent 30%); }
+  .phero.phero-feature .phero-txt { position: relative !important; z-index: 1 !important; width: min(520px, 38vw) !important; max-width: none !important; margin: 0 !important; padding: 0 !important; background: none !important; box-shadow: none !important; border: 0 !important; border-radius: 0 !important; color: var(--pf-ink) !important; }
+  .phero.phero-feature h1 { color: var(--pf-ink) !important; font-size: clamp(38px, 3.6vw, 56px) !important; line-height: 1.06 !important; text-wrap: balance; margin: 0 0 20px !important; }
+  .phero.phero-feature .lead, .phero.phero-feature .crumbs, .phero.phero-feature .crumbs a, .phero.phero-feature .crumbs li { color: var(--pf-ink) !important; opacity: 1 !important; }
+  .phero.phero-feature .lead { font-size: clamp(17px, 1.2vw, 19px) !important; line-height: 1.6 !important; max-width: none !important; }
+  .phero.phero-feature .acts { flex-wrap: nowrap !important; }
+  .phero.phero-feature .acts .btn { white-space: nowrap !important; }
+  /* white-fade versions */
+  .phero.phero-feature.pf-light { --pf-fade: #FFFFFF; --pf-ink: #12263A; }
+  .phero.phero-feature.pf-light .btn:not(.btn-line) { background: #2B3A67 !important; color: #FFFFFF !important; border-color: #2B3A67 !important; }
+  .phero.phero-feature.pf-light .btn.btn-line { background: rgba(255,255,255,.75) !important; color: #2B3A67 !important; border-color: #2B3A67 !important; }
+}
+
+/* A solid 1.5cm band at the foot of every header, in the next section's colour (set by
+   script.js), so the following section already shows in the first screen (client,
+   2026-10-27: a band, not a fade). It sits above the photo and below the text. */
+.hero.hero-cover, .phero { position: relative; }
+.next-fade { position: absolute; left: 0; right: 0; bottom: 0; height: 1.5cm; z-index: 1; pointer-events: none;
+  background: var(--next-bg); }
+.hero.hero-cover .hero-txt, .phero .phero-txt, .phero .phero-aside { position: relative; z-index: 2; }
+/* Headers keep their content clear of the 1.5cm band: the header grows at the bottom by
+   the band height, so no text or button ever sits on it. */
+.phero:has(> .next-fade) { padding-bottom: calc(1.5cm + 24px) !important; }
+@media (min-width: 901px) {
+  .phero.phero-feature:has(> .next-fade) { padding-bottom: 0 !important; }
+  .phero.phero-feature:has(> .next-fade) .wrap.phero-in { padding-bottom: calc(1.5cm + 48px) !important; }
+  .hero.hero-full:has(> .next-fade) .wrap.hero-in { padding-bottom: 1.5cm !important; }
+}
+@media (max-width: 900px) {
+  .hero.hero-cover:has(> .next-fade) .wrap.hero-in { padding-bottom: calc(1.5cm + 24px) !important; }
+}
+
+/* Corner system (client, 2026-10-27): one element never mixes rounded and square
+   corners, and a version is either square or rounded throughout. Full-width bands and
+   full-bleed header photos are never rounded, since they run edge to edge. */
+.hero, .phero, main > section, main > header, main > div, .menu, .search, footer.foot { border-radius: 0 !important; }
+.hero-bg, .hero-bg picture, .hero-bg img, .phero-feature-pic, .phero-feature-pic picture, .phero-feature-pic img { border-radius: 0 !important; }
+.cmp tbody tr > :first-child, .cmp tbody tr > :last-child { border-radius: 0 !important; }
+
+/* The team headline is longer than the home one: a wider measure keeps it on three lines. */
+.hero.hero-full.team-cover { --h1-measure: 8.6; }
+
+/* ======================================================================
+   HEADER SYSTEM, every page of every version (client guardrail, 2026-10-27)
+   The home header is the template. Same height, same text column on the
+   left, headline, introduction and two buttons in the same place, the
+   1.5cm band underneath. Only the photo changes:
+   hx-full  a landscape photo fills the header behind a left gradient
+   hx-side  any other photo sits framed on the right, on a band that follows
+            the photo (hx-band-light for light photos, hx-band-dark for dark)
+   The panorama team photo (2.5:1) opens home and team; its group starts at
+   41% of the width, so the header height follows the photo's ratio and the
+   text column always stops before the first person.
+   ====================================================================== */
+@media (min-width: 1100px) {
+  .hero.hero-full {
+    --H: clamp(560px, calc(100vw / 2.497), calc(100svh - var(--hh, 84px)));
+    --wr: max(100vw, calc(var(--H) * 2.497));
+    --people: 0.59;
+    --px: calc(100vw - var(--wr) * var(--people));
+    --lp: calc(max(0px, (100vw - var(--wrap, 1240px)) / 2) + var(--pad-x, 24px));
+    --tl: max(40px, min(var(--lp), calc(var(--px) - 560px)));
+    --col: min(calc(var(--px) - var(--tl) - 90px), 580px);
+    height: auto !important; min-height: var(--H) !important;
+  }
+  .hero.hero-full .wrap.hero-in { min-height: var(--H) !important; height: auto !important; padding-top: 56px !important; }
+  /* interior pages: same column and position as home, whatever the photo */
+  .hero.hero-full.hx-page .hero-bg picture, .hero.hero-full.hx-page .hero-bg img { object-position: 62% 35% !important; }
+  html body .hero.hero-full.hx-page .hero-txt h1 { font-size: clamp(42px, calc(var(--col) / 8), 60px) !important; max-width: none !important; line-height: 1.07 !important; }
+  .hero.hero-full.hx-page .crumbs { margin: 0 0 18px !important; }
+  /* hx-full on interior pages: the same eased gradient as home, measured from the column */
+  .hero.hero-full.hx-page.hx-full .hero-bg::after { background: linear-gradient(90deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 86%, transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 80%, transparent) calc(var(--px) - 120px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 52%, transparent) calc(var(--px) + 60px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 22%, transparent) calc(var(--px) + 200px),
+      transparent calc(var(--px) + 320px)) !important; }
+  .hero.hero-full.hx-page.hx-full.hero-light .hero-bg::after { background: linear-gradient(90deg,
+      rgba(255,255,255,.88) 0, rgba(255,255,255,.82) calc(var(--px) - 120px), rgba(255,255,255,.55) calc(var(--px) + 60px),
+      rgba(255,255,255,.22) calc(var(--px) + 200px), transparent calc(var(--px) + 320px)) !important; }
+  /* hx-side: framed photo on the right, the band follows the photo's lightness */
+  .hero.hero-full.hx-side .hero-bg { position: absolute !important; inset: 48px var(--lp) calc(1.5cm + 48px) auto !important; left: auto !important;
+    width: calc(100vw - var(--px) - var(--lp)) !important; height: auto !important; overflow: hidden; }
+  .hero.hero-full.hx-side .hero-bg::after { display: none !important; }
+  .hero.hero-full.hx-side .hero-bg picture, .hero.hero-full.hx-side .hero-bg img { object-position: 50% 30% !important; }
+}
+/* band colours and text for hx-side, all widths */
+.hero.hero-full.hx-side.hx-band-light { background: color-mix(in srgb, var(--cover-box, #2B3A67) 9%, #FFFFFF) !important; }
+.hero.hero-full.hx-side.hx-band-dark { background: var(--cover-box, #2B3A67) !important; }
+.hx-band-light .hero-txt, html body .hx-band-light .hero-txt h1, .hx-band-light .lead, .hx-band-light .crumbs, .hx-band-light .crumbs a, .hx-band-light .crumbs li { color: #12263A !important; }
+.hx-band-light .btn:not(.btn-line) { background: #2B3A67 !important; color: #FFFFFF !important; border-color: #2B3A67 !important; }
+.hx-band-light .btn.btn-line { background: #FFFFFF !important; color: #2B3A67 !important; border-color: #2B3A67 !important; }
+.hx-band-light .btn:hover { background: #12263A !important; color: #FFFFFF !important; border-color: #12263A !important; }
+.hx-band-dark .hero-txt, html body .hx-band-dark .hero-txt h1, .hx-band-dark .lead, .hx-band-dark .crumbs, .hx-band-dark .crumbs a, .hx-band-dark .crumbs li { color: #FFFFFF !important; }
+/* a portrait cut-out on a profile page sits on the version's portrait colour */
+.hx-person .hx-portrait { display: block; width: 100%; height: 100%; background: var(--portrait-bg, color-mix(in srgb, #23FFED 32%, #FFFFFF)); }
+.hx-person .hx-portrait picture, .hx-person .hx-portrait img { width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: 50% 100% !important; }
+@media (min-width: 1100px) { .hero.hero-full.hx-person .hero-bg { width: min(420px, calc(100vw - var(--px) - var(--lp))) !important; } }
+/* phones and tablets: photo on top, text below on the band, the same on every page */
+@media (max-width: 1099px) {
+  .hero.hero-full .hero-bg picture, .hero.hero-full .hero-bg img { aspect-ratio: 16 / 10; height: auto !important; object-fit: cover !important; }
+  .hero.hero-full.hx-person .hero-bg picture, .hero.hero-full.hx-person .hero-bg img { aspect-ratio: 4 / 5; object-fit: contain !important; }
+  .hero.hero-full .hero-txt { padding-top: 28px !important; }
+  .hero.hero-full.hx-page.hx-full, .hero.hero-full:not(.hx-side) { background: var(--cover-box, #2B3A67) !important; }
+  .hero.hero-full:not(.hx-side) .hero-txt, html body .hero.hero-full:not(.hx-side) .hero-txt h1, .hero.hero-full:not(.hx-side) .lead, .hero.hero-full:not(.hx-side) .crumbs, .hero.hero-full:not(.hx-side) .crumbs a { color: #FFFFFF !important; }
+  .hero.hero-full .acts { flex-wrap: wrap !important; }
+}
+/* the profile body that used to live in the header */
+.profile-sec { padding: clamp(48px, 6vw, 88px) 0; }
+.profile-sec .profile { display: block !important; max-width: 760px; }
+.urg-call { padding: clamp(40px, 5vw, 64px) 0 0; }
+.urg-call .urg-tel { max-width: 520px; }
+
+/* One position for the buttons on every page (client guardrail): the header content is
+   anchored to the bottom, so the two buttons always sit 56px above the 1.5cm band, on
+   the same left edge and in the same column as on the home page. A longer title grows
+   the block upward instead of pushing the buttons down. */
+@media (min-width: 1100px) {
+  .hero.hero-full .wrap.hero-in { align-items: flex-end !important; padding-top: 64px !important; padding-bottom: calc(1.5cm + 56px) !important; }
+  .hero.hero-full:has(> .next-fade) .wrap.hero-in { padding-bottom: calc(1.5cm + 56px) !important; }
+  .hero.hero-full .hero-txt { align-self: flex-end !important; }
+  .hero.hero-full .lead { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; overflow: hidden; }
+}
+
+/* Header text colours win over every version stylesheet: dark text on light bands and
+   white fades, white text on dark bands and dark fades. */
+html body main .hero.hero-full.hx-band-light :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li),
+html body main .hero.hero-full.hero-light :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li),
+html body .hero.hero-full.hx-band-light :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li),
+html body .hero.hero-full.hero-light :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li) { color: #12263A !important; }
+html body .hero.hero-full:not(.hx-band-light):not(.hero-light) :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li) { color: #FFFFFF !important; }
+/* the secondary button on a dark header has a visible fill and a white outline */
+html body .hero.hero-full:not(.hx-band-light):not(.hero-light) .btn.btn-line { background: rgba(18, 38, 58, .45) !important; color: #FFFFFF !important; border: 2px solid #FFFFFF !important; }
+html body .hero.hero-full:not(.hx-band-light):not(.hero-light) .btn.btn-line:hover { background: #FFFFFF !important; color: #12263A !important; }
+@media (max-width: 1099px) {
+  html body .hero.hero-full.hero-light:not(.hx-side) :is(.hero-txt, h1, .lead, .crumbs, .crumbs a, .crumbs li) { color: #FFFFFF !important; }
+  html body .hero.hero-full.hero-light:not(.hx-side) .btn:not(.btn-line) { background: #FFFFFF !important; color: #12263A !important; border-color: #FFFFFF !important; }
+  html body .hero.hero-full.hero-light:not(.hx-side) .btn.btn-line { background: #FFFFFF !important; color: #12263A !important; border: 2px solid #FFFFFF !important; }
+}
+/* the secondary button on a light header keeps a visible outline */
+html body .hero.hero-full:is(.hx-band-light, .hero-light) .btn.btn-line { background: rgba(255, 255, 255, .7) !important; color: #12263A !important; border: 2px solid #12263A !important; }
+html body .hero.hero-full:is(.hx-band-light, .hero-light) .btn.btn-line:hover { background: #12263A !important; color: #FFFFFF !important; }
+
+/* Contrast floor (client, 2026-10-27): white text on dark, deep blue text on light,
+   never blue on blue. The profile body now sits on white below the header. */
+.profile-sec { background: #FFFFFF !important; color: #12263A !important; }
+.profile-sec :is(p, li, dt, dd, h2, h3, .side-h, .muted, .team-role, a:not(.btn)) { color: #12263A !important; opacity: 1 !important; }
+.profile-sec .inline a { background: color-mix(in srgb, #2B3A67 8%, #FFFFFF) !important; }
+/* the photo-less video note on a white page */
+.video-slot:has(> .ill-tile) { background: color-mix(in srgb, #2B3A67 7%, #FFFFFF) !important; }
+.video-slot:has(> .ill-tile) :is(.video-k, b, p) { color: #12263A !important; opacity: 1 !important; }
+/* A video slot whose text sits outside the photo, on the page: dark text on a light tint.
+   A slot whose text sits on the photo keeps its own light text. */
+.video-slot:not(:has(> picture)) { background: color-mix(in srgb, #2B3A67 7%, #FFFFFF); }
+.video-slot:not(:has(> picture)) .video-txt :is(.video-k, b, p) { color: #12263A !important; opacity: 1 !important; }
+
+/* Buttons always have a solid fill (client, 2026-10-27): no transparent or see-through
+   button anywhere. The secondary button is solid white with deep blue text and a deep
+   blue outline, on every background, so it reads next to the primary one. */
+html body .btn.btn-line:not(.btn-urg),
+html body .hero.hero-full .btn.btn-line,
+html body .hero.hero-full:not(.hx-band-light):not(.hero-light) .btn.btn-line,
+html body .hero.hero-full:is(.hx-band-light, .hero-light) .btn.btn-line {
+  background: #FFFFFF !important; color: #12263A !important; border: 2px solid #12263A !important; opacity: 1 !important; backdrop-filter: none !important; }
+html body .btn.btn-line:not(.btn-urg):hover, html body .hero.hero-full .btn.btn-line:hover { background: #12263A !important; color: #FFFFFF !important; border-color: #12263A !important; }
+@media (max-width: 1099px) {
+  html body .hero.hero-full .btn.btn-line { background: #FFFFFF !important; color: #12263A !important; border: 2px solid #FFFFFF !important; }
+}
+/* the header's emergency button on a dark navigation bar is solid too */
+html body header.top .btn-urg { background: #FFFFFF !important; color: #12263A !important; border-color: #FFFFFF !important; }
+html body header.top .btn-urg:hover { background: #23FFED !important; color: #12263A !important; }
+
+/* hx-side, final (client, 2026-10-27): the photo is shown whole at its own ratio in a
+   frame on the right, vertically centred in the header, never cropped and never under a
+   gradient. The band colour follows the photo: light band for a light photo. */
+@media (min-width: 1100px) {
+  .hero.hero-full.hx-side .hero-bg { position: absolute !important; top: 50% !important; bottom: auto !important; left: auto !important;
+    right: max(var(--lp), 40px) !important; translate: 0 calc(-50% - 0.75cm);
+    aspect-ratio: var(--ratio, 4 / 3) !important; height: calc(var(--H) - 1.5cm - 96px) !important;
+    width: auto !important; max-width: calc(100vw - var(--px) - max(var(--lp), 40px)) !important; inset: auto max(var(--lp), 40px) auto auto !important; top: 50% !important; }
+  .hero.hero-full.hx-side .hero-bg picture, .hero.hero-full.hx-side .hero-bg img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 50% 50% !important; filter: none !important; }
+  .hero.hero-full.hx-side .hero-bg::after { content: none !important; }
+}
+@media (max-width: 1099px) {
+  .hero.hero-full.hx-side .hero-bg picture, .hero.hero-full.hx-side .hero-bg img { aspect-ratio: var(--ratio, 4 / 3) !important; object-fit: cover !important; object-position: 50% 50% !important; }
+}
+
+/* hx-side, larger (client, 2026-10-27): the photo is a wide image that fills the whole
+   right side of the header, from the text column to the screen edge and from the top of
+   the header to the 1.5cm band. It is framed on the people (upper third), never on the
+   middle of the picture, and it is never covered by a gradient. */
+@media (min-width: 1100px) {
+  .hero.hero-full.hx-side .hero-bg { inset: 0 0 1.5cm calc(var(--tl) + var(--col) + 72px) !important; top: 0 !important; right: 0 !important; left: calc(var(--tl) + var(--col) + 72px) !important;
+    width: auto !important; height: auto !important; max-width: none !important; aspect-ratio: auto !important; translate: none !important; }
+  .hero.hero-full.hx-side .hero-bg picture, .hero.hero-full.hx-side .hero-bg img { object-position: 50% 28% !important; }
+  .hero.hero-full.hx-person .hero-bg { left: calc(var(--tl) + var(--col) + 72px) !important; }
+}
+
+/* band colours win over version stylesheets */
+html body .hero.hero-full.hx-side.hx-band-light { background: color-mix(in srgb, var(--cover-box, #2B3A67) 9%, #FFFFFF) !important; }
+html body .hero.hero-full.hx-side.hx-band-dark { background: var(--cover-box, #2B3A67) !important; }
+/* the fitted headline is measured live, so it never animates its size or measure */
+.hero.hero-full .hero-txt h1 { transition: none !important; }
+
+/* Video slot with a photo, every version: the label and text sit on the photo's lower
+   part over a dark shade, white on dark, and stay inside the frame. */
+.video-slot:has(> picture) { position: relative !important; display: block !important; overflow: hidden; }
+.video-slot:has(> picture) > picture, .video-slot:has(> picture) > picture img { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto !important; object-fit: cover; object-position: 50% 30%; }
+.video-slot:has(> picture)::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(18,38,58,.88) 0, rgba(18,38,58,.55) 45%, rgba(18,38,58,0) 75%); pointer-events: none; }
+.video-slot:has(> picture) > .video-txt { position: absolute !important; left: 28px; right: 28px; bottom: 24px; z-index: 2; inset: auto 28px 24px 28px !important; padding: 0 !important; background: none !important; transform: none !important; }
+.video-slot:has(> picture) > .video-txt :is(.video-k, b, p) { color: #FFFFFF !important; opacity: 1 !important; display: block; }
+.video-slot:has(> picture) > .video-play { z-index: 2; }
+
+.video-slot:has(> picture) > .video-txt .video-k { background: none !important; padding: 0 !important; color: #FFFFFF !important; font-weight: 700; }
+.video-slot:has(> picture) > .video-txt { display: flex !important; flex-direction: column; gap: 6px; }
+.video-slot:has(> picture) > .video-txt .video-k { order: -1; }
+
+/* Secondary button on a dark header: an opaque lighter tint of the band with white text
+   and a white outline, so it is clearly a button and clearly second to the primary one. */
+html body .hero.hero-full:not(.hx-band-light):not(.hero-light) .btn.btn-line,
+html body .hero.hero-full.hero-light:not(.hx-side) .btn.btn-line {
+  background: color-mix(in srgb, #FFFFFF 16%, var(--cover-box, #2B3A67)) !important; color: #FFFFFF !important; border: 2px solid #FFFFFF !important; }
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:not(.hx-side) .btn.btn-line { background: #FFFFFF !important; color: #12263A !important; border: 2px solid #12263A !important; }
+}
+/* phones and tablets: every header photo sits in the flow at 4:3, framed on the people,
+   and the text and buttons follow below it on the band */
+@media (max-width: 1099px) {
+  .hero.hero-full .hero-bg { position: relative !important; inset: auto !important; width: auto !important; height: auto !important; translate: none !important; margin: 0 calc(var(--pad-x, 24px) * -1) !important; }
+  .hero.hero-full .hero-bg::after { content: none !important; }
+  .hero.hero-full .hero-bg picture, .hero.hero-full .hero-bg img, .hero.hero-full.hx-side .hero-bg picture, .hero.hero-full.hx-side .hero-bg img { aspect-ratio: 4 / 3 !important; height: auto !important; width: 100% !important; object-fit: cover !important; object-position: 50% 28% !important; }
+  .hero.hero-full:not(.hx-page) .hero-bg picture, .hero.hero-full:not(.hx-page) .hero-bg img { aspect-ratio: 16 / 9 !important; object-position: 72% 40% !important; }
+  .hero.hero-full.hx-person .hero-bg picture, .hero.hero-full.hx-person .hero-bg img { object-fit: contain !important; object-position: 50% 100% !important; }
+  .hero.hero-full .wrap.hero-in { display: flex !important; flex-direction: column !important; }
+  .hero.hero-full .hero-bg { order: -1; }
+}
+/* on phones the video text sits under the photo on deep blue, so it never rides over
+   the paragraph above */
+@media (max-width: 700px) {
+  .video-slot:has(> picture)::after { content: none; }
+  .video-slot:has(> picture) > .video-txt { position: static !important; inset: auto !important; padding: 20px 22px 22px !important; background: #12263A !important; }
+}
+
+/* Text to people, every version (client guardrail, 2026-10-27): on the team panorama the
+   first person (her elbow) starts at 40.5% of the photo width, measured on the pixels.
+   The text column, headline, introduction and buttons all end exactly 1.5cm before that
+   line, on every screen. The headline is capped at 60px so it never dominates the photo. */
+@media (min-width: 1100px) {
+  .hero.hero-full { --people: 0.595; --col: min(calc(var(--px) - var(--tl) - 1.5cm), 600px); }
+  html body .hero.hero-full .hero-txt h1 { font-size: clamp(40px, calc(var(--col) / var(--h1-measure, 7.8) * 1.05), 60px) !important; }
+  .hero.hero-full .hero-txt, .hero.hero-full .hero-txt .lead, .hero.hero-full .hero-txt .acts { max-width: var(--col) !important; }
+}
+/* the two buttons always fit inside the text column: they share it and never overflow */
+@media (min-width: 1100px) {
+  .hero.hero-full .hero-txt .acts { display: flex !important; flex-wrap: nowrap !important; gap: 10px !important; width: 100%; }
+  .hero.hero-full .hero-txt .acts .btn { flex: 0 1 auto !important; min-width: 0 !important; white-space: nowrap !important; padding-left: clamp(14px, 1.4vw, 26px) !important; padding-right: clamp(14px, 1.4vw, 26px) !important; font-size: clamp(14px, 1.05vw, 16px) !important; }
+}
+
+/* Bottom band under every header, every version (client guardrail, 2026-10-27): 0.75cm,
+   half of the earlier 1.5cm. The header spacing that made room for it shrinks with it, so
+   the buttons keep their 56px above the band and the photo still stops at the band. */
+html body .next-fade { height: 0.75cm !important; }
+@media (min-width: 1100px) {
+  html body .hero.hero-full .wrap.hero-in, html body .hero.hero-full:has(> .next-fade) .wrap.hero-in { padding-bottom: calc(0.75cm + 56px) !important; }
+  html body .hero.hero-full.hx-side .hero-bg { bottom: 0.75cm !important; inset: 0 0 0.75cm calc(var(--tl) + var(--col) + 72px) !important; }
+}
+@media (max-width: 1099px) {
+  html body .hero.hero-cover:has(> .next-fade) .wrap.hero-in { padding-bottom: calc(0.75cm + 24px) !important; }
+}
+html body .phero:has(> .next-fade) { padding-bottom: calc(0.75cm + 24px) !important; }
+/* phones: the same 24px between the buttons and the band in every version */
+@media (max-width: 1099px) {
+  html body .hero.hero-full .hero-txt { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+  html body .hero.hero-full .hero-txt .acts { margin-bottom: 0 !important; }
+  html body .hero.hero-full .wrap.hero-in, html body .hero.hero-full:has(> .next-fade) .wrap.hero-in { padding-bottom: calc(0.75cm + 24px) !important; }
+}
+
+/* Section headings, every version (client guardrail, 2026-10-27): a heading and its
+   introduction are never split into two distant columns. They are centred and stacked,
+   the heading first and the introduction under it, held to a reading width. */
+html body :is(.sec-head, .sec-head-split, .about-txt) { display: block !important; grid-template-columns: none !important; max-width: 760px !important; margin-left: auto !important; margin-right: auto !important; text-align: center !important; }
+html body :is(.sec-head, .sec-head-split, .about-txt) > *, html body .sec-head-split > div > * { max-width: none !important; margin-left: auto !important; margin-right: auto !important; text-align: center !important; grid-column: auto !important; grid-row: auto !important; }
+html body :is(.sec-head, .sec-head-split, .about-txt) h2 { margin-bottom: 18px !important; text-wrap: balance; }
+html body :is(.sec-head, .sec-head-split, .about-txt) :is(p, .lead) { max-width: 62ch !important; text-wrap: pretty; }
+html body .about-txt .statement { margin-top: 32px !important; display: inline-block !important; width: auto !important; text-align: center !important; }
+html body .about-diff-h { text-align: center !important; margin-left: auto !important; margin-right: auto !important; max-width: 760px !important; }
+html body .about-in { display: block !important; }
+
+/* Numbered lists (the 01 to 04 commitments): the number sits in its own column, so every
+   number is on one vertical line and every title and text start on one shared line. */
+html body .trust-grid { counter-reset: diff; }
+html body .trust-item { display: grid !important; grid-template-columns: 3.2ch minmax(0, 1fr) !important; column-gap: 20px !important; align-items: start !important; text-align: left !important; }
+html body .trust-item::before { counter-increment: diff; content: counter(diff, decimal-leading-zero) !important; grid-column: 1 !important; grid-row: 1 / span 2 !important; display: block !important;
+  font-size: clamp(28px, 2.4vw, 40px) !important; line-height: 1 !important; margin: 0 !important; padding: 0 !important; font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0 !important; text-align: left !important; }
+html body .trust-item > dt, html body .trust-item > dd { grid-column: 2 !important; margin-left: 0 !important; }
+html body .trust-item > dt { margin-top: 2px !important; }
+/* the number sits on the title's row only, so the text follows the title directly */
+html body .trust-item::before { grid-row: 1 !important; align-self: start !important; }
+html body .trust-item > dt { grid-row: 1 !important; align-self: start !important; }
+html body .trust-item > dd { grid-row: 2 !important; margin-top: 10px !important; }
+/* a taller card in an equal-height row keeps its content packed at the top */
+html body .trust-item { align-content: start !important; grid-template-rows: auto auto !important; }
+
+
+/* Header introduction and buttons, every version (client, 2026-10-27): set in Lato, a
+   little heavier and larger, so they read clearly over the photo and the buttons stand out. */
+html body .hero.hero-full .hero-txt .lead { font-family: "Lato", "Helvetica Neue", Arial, sans-serif !important; font-weight: 400 !important; font-size: clamp(18px, 1.3vw, 20px) !important; line-height: 1.55 !important; letter-spacing: .005em; }
+html body .hero.hero-full .hero-txt .acts .btn, html body header.top .btn { font-family: "Lato", "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; letter-spacing: .01em; }
+html body .hero.hero-full .hero-txt .crumbs { font-family: "Lato", "Helvetica Neue", Arial, sans-serif !important; font-weight: 700 !important; }
+/* stronger fade under the text on the panorama, still clear before the people */
+html body .hero.hero-full:not(.hx-side):not(.hero-light) .lead { text-shadow: 0 1px 2px rgba(18, 38, 58, .35); }
+
+/* Stronger, still gradual fade behind the panorama text: solid enough under the column
+   for clear reading, then easing out to nothing just before the first person. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) .hero-bg::after { background: linear-gradient(90deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 90%, transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) 86.0%, transparent) calc(var(--px) - 1.5cm - 360px + 0px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 81.7%, transparent) calc(var(--px) - 1.5cm - 360px + 48px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 75.7%, transparent) calc(var(--px) - 1.5cm - 360px + 100px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 65.4%, transparent) calc(var(--px) - 1.5cm - 360px + 152px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 51.6%, transparent) calc(var(--px) - 1.5cm - 360px + 200px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 37.8%, transparent) calc(var(--px) - 1.5cm - 360px + 248px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 24.1%, transparent) calc(var(--px) - 1.5cm - 360px + 296px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 11.2%, transparent) calc(var(--px) - 1.5cm - 360px + 344px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) 0%, transparent) calc(var(--px) - 1.5cm - 360px + 400px)) !important; }
+  html body .hero.hero-full.hero-light:not(.hx-side) .hero-bg::after { background: linear-gradient(90deg,
+      color-mix(in srgb, #FFFFFF 93%, transparent) 0,
+      color-mix(in srgb, #FFFFFF 90.0%, transparent) calc(var(--px) - 1.5cm - 360px + 0px),
+      color-mix(in srgb, #FFFFFF 85.5%, transparent) calc(var(--px) - 1.5cm - 360px + 48px),
+      color-mix(in srgb, #FFFFFF 79.2%, transparent) calc(var(--px) - 1.5cm - 360px + 100px),
+      color-mix(in srgb, #FFFFFF 68.4%, transparent) calc(var(--px) - 1.5cm - 360px + 152px),
+      color-mix(in srgb, #FFFFFF 54.0%, transparent) calc(var(--px) - 1.5cm - 360px + 200px),
+      color-mix(in srgb, #FFFFFF 39.6%, transparent) calc(var(--px) - 1.5cm - 360px + 248px),
+      color-mix(in srgb, #FFFFFF 25.2%, transparent) calc(var(--px) - 1.5cm - 360px + 296px),
+      color-mix(in srgb, #FFFFFF 11.7%, transparent) calc(var(--px) - 1.5cm - 360px + 344px),
+      color-mix(in srgb, #FFFFFF 0%, transparent) calc(var(--px) - 1.5cm - 360px + 400px)) !important; }
+}
+/* The panorama header has a fixed height, so the photo's scale, and with it the people's
+   position, never depends on the length of the text. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side) { height: var(--H) !important; min-height: var(--H) !important; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in { min-height: 0 !important; height: 100% !important; }
+}
+/* when the text needs more room than the photo's height (the team page on a short
+   screen), the header grows instead of clipping; the people's edge is re-measured */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side) { height: auto !important; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in { height: auto !important; min-height: var(--H) !important; padding-top: 48px !important; }
+}
+/* final: the panorama header keeps one fixed height (no feedback between text length and
+   the photo's scale), with 40px of room above the text; on short screens the team
+   introduction is held to four lines so nothing is ever clipped */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side) { height: var(--H) !important; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in { height: 100% !important; min-height: 0 !important; padding-top: 40px !important; }
+}
+@media (min-width: 1100px) and (max-height: 800px) {
+  html body .hero.hero-full.team-cover .lead { -webkit-line-clamp: 4 !important; }
+}
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side) .lead { -webkit-line-clamp: 5 !important; }
+  html body .hero.hero-full.team-cover .lead { -webkit-line-clamp: 4 !important; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in { padding-top: 32px !important; }
+  html body .hero.hero-full:not(.hx-side) .hero-txt h1 { margin-bottom: 16px !important; }
+  html body .hero.hero-full:not(.hx-side) .acts { margin-top: 22px !important; }
+}
+
+/* Lato buttons: the label is centred on its cap height, not on the line box */
+html body .hero.hero-full .hero-txt .acts .btn, html body header.top .btn { text-box: trim-both cap alphabetic; }
+
+/* Commitments carry no step numbers (client, 2026-10-27): the numbers sat in a different
+   size right against each title and, on dark cards, in dark ink with almost no contrast.
+   The title and its text stand alone, in one column. */
+html body .trust-item::before, html body .about .trust-item dt::before { content: none !important; display: none !important; counter-increment: none !important; }
+html body .trust-item { grid-template-columns: minmax(0, 1fr) !important; column-gap: 0 !important; }
+html body .trust-item > dt, html body .trust-item > dd { grid-column: 1 !important; }
+
+/* Clearance after a background change (client, 2026-10-27): a section heading never sits
+   against the band above it. The care families intro on version 1 had 0px and touched the
+   grey cabinets band. */
+html body .soins-head { padding-top: clamp(80px, 7vw, 112px) !important; }
+
+/* Varied heading alignment (client, 2026-10-27): not every heading and subheading is
+   centred. The about introduction stays centred; every other section heading starts on the
+   left of the content column, and split heads set the heading left and the text right. */
+html body :is(.sec-head, .sec-head-split) { text-align: left !important; }
+html body :is(.sec-head, .sec-head-split):not(.wrap) { margin-left: 0 !important; margin-right: auto !important; }
+html body .wrap:is(.sec-head, .sec-head-split) { margin-left: auto !important; margin-right: auto !important; max-width: var(--wrap, 1200px) !important; }
+html body :is(.sec-head, .sec-head-split) > *, html body .sec-head-split > div > * { text-align: left !important; margin-left: 0 !important; margin-right: 0 !important; }
+@media (min-width: 900px) {
+  html body .sec-head-split { display: grid !important; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr) !important; column-gap: clamp(40px, 4vw, 72px) !important; align-items: end !important; max-width: none !important; }
+  html body .sec-head-split > h2, html body .sec-head-split > div { grid-column: 1 !important; margin-bottom: 0 !important; }
+  html body .sec-head-split > p { grid-column: 2 !important; margin: 0 !important; max-width: 56ch !important; }
+}
+
+/* No step numbers beside or above step titles either (client, 2026-10-27): the visit steps
+   and first-visit steps read as titles with their text, in the order they are listed. */
+html body :is(.steps, .vsteps, ol) > li > .num, html body .vstep > .num { display: none !important; }
+html body .steps > li, html body .vstep { grid-template-columns: minmax(0, 1fr) !important; }
+
+/* No statement boxes (client, 2026-10-27): a sentence set large inside a filled box read as a
+   warning banner. The philosophy and calm sections open on an ordinary section heading. */
+html body .philo-h { background: none !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; font-size: clamp(24px, 1.9vw, 30px) !important; line-height: 1.25 !important; margin: 0 0 18px !important; text-align: left !important; max-width: none !important; text-wrap: balance; }
+
+/* Equal-height cards keep equal insets (alignment gate, 2026-10-27): the content of a shorter
+   card sits in the vertical middle of its card, so space above and below match. */
+html body .trust-item { align-content: center !important; }
+html body .visite .visite-txt .steps > li { justify-content: center !important; }
+html body .trust-item > dd, html body .visite .visite-txt .steps > li > div > p:last-child { margin-bottom: 0 !important; }
+
+/* Care families with a photo (client, 2026-10-27): the photo fills the whole section, a dark
+   fade gives the text its density on the right, and the heading, its line, the text, the care
+   list and the button sit in the right half. Families shown with an illustration keep their
+   layout. The 01 to 04 family numbers are gone, as everywhere else. */
+html body .hfam-n { display: none !important; }
+html body .hfam:has(.hfam-visual img) { position: relative !important; overflow: hidden !important; background: #12263a !important; padding-block: clamp(96px, 9vw, 144px) !important; }
+html body .hfam:has(.hfam-visual img) .hfam-visual { position: absolute !important; inset: 0 !important; width: auto !important; height: auto !important; max-width: none !important; margin: 0 !important; border-radius: 0 !important; z-index: 0 !important; }
+html body .hfam:has(.hfam-visual img) .hfam-visual :is(picture, img) { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 30% center !important; border-radius: 0 !important; max-width: none !important; }
+html body .hfam:has(.hfam-visual img)::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to left, rgba(18, 38, 58, .9) 0%, rgba(18, 38, 58, .82) 38%, rgba(18, 38, 58, .35) 62%, rgba(18, 38, 58, 0) 80%); }
+html body .hfam:has(.hfam-visual img) .hfam-in { position: relative !important; z-index: 2 !important; display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; min-height: 0 !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt { grid-column: 2 !important; grid-row: 1 !important; color: #fff !important; max-width: 560px !important; justify-self: end !important; width: 100% !important; text-shadow: 0 1px 2px rgba(18, 38, 58, .35); }
+html body .hfam:has(.hfam-visual img) .hfam-txt :is(h2, h2 a, .fam-line, p) { color: #fff !important; }
+html body .hfam:has(.hfam-visual img) .care-list li a { background: rgba(255, 255, 255, .1) !important; border-color: rgba(255, 255, 255, .24) !important; color: #fff !important; }
+html body .hfam:has(.hfam-visual img) .care-list :is(.cl-n, .cl-q) { color: #fff !important; }
+html body .hfam:has(.hfam-visual img) .btn-line { color: #fff !important; border-color: #fff !important; background: transparent !important; }
+@media (max-width: 900px) {
+  html body .hfam:has(.hfam-visual img) .hfam-in { grid-template-columns: minmax(0, 1fr) !important; }
+  html body .hfam:has(.hfam-visual img) .hfam-txt { grid-column: 1 !important; justify-self: stretch !important; }
+  html body .hfam:has(.hfam-visual img)::after { background: linear-gradient(to top, rgba(18, 38, 58, .92) 0%, rgba(18, 38, 58, .85) 55%, rgba(18, 38, 58, .55) 100%); }
+}
+/* the photo is positioned against the section, not the inner column, and the text block is a
+   real box in every version (some set it to display: contents) */
+html body .hfam:has(.hfam-visual img) .hfam-in { position: static !important; }
+html body .hfam:has(.hfam-visual img) .hfam-visual { left: 0 !important; right: 0 !important; top: 0 !important; bottom: 0 !important; width: 100% !important; height: 100% !important; grid-column: auto !important; grid-row: auto !important; transform: none !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt { display: block !important; position: relative !important; z-index: 2 !important; }
+html body .hfam:has(.hfam-visual img) .care-list :is(li, li > a) { background: rgba(255, 255, 255, .1) !important; border-color: rgba(255, 255, 255, .24) !important; color: #fff !important; box-shadow: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list * { color: #fff !important; }
+
+/* Care families on the wide photos (client, 2026-10-27): every family photo now keeps open,
+   light space on the left, so the heading, its line, the text, the care list and the button
+   sit in that space, in the brand ink, over a soft white fade that keeps the text readable. */
+html body .hfam:has(.hfam-visual img) { background: #fff !important; }
+html body .hfam:has(.hfam-visual img) .hfam-visual :is(picture, img) { object-position: right center !important; }
+html body .hfam:has(.hfam-visual img)::after { background: linear-gradient(to right, rgba(255, 255, 255, .94) 0%, rgba(255, 255, 255, .86) 34%, rgba(255, 255, 255, .35) 50%, rgba(255, 255, 255, 0) 62%) !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt { grid-column: 1 !important; justify-self: start !important; text-shadow: none !important; color: var(--ink, #12263a) !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt :is(h2, h2 a, .fam-line, p) { color: var(--ink, #12263a) !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt h2 a { color: inherit !important; }
+html body .hfam:has(.hfam-visual img) .care-list :is(li, li > a) { background: rgba(255, 255, 255, .78) !important; border-color: rgba(18, 38, 58, .12) !important; color: var(--ink, #12263a) !important; }
+html body .hfam:has(.hfam-visual img) .care-list * { color: var(--ink, #12263a) !important; }
+html body .hfam:has(.hfam-visual img) .btn-line { color: var(--ink, #12263a) !important; border-color: var(--ink, #12263a) !important; background: rgba(255, 255, 255, .7) !important; }
+@media (max-width: 900px) {
+  html body .hfam:has(.hfam-visual img) { padding-top: 0 !important; }
+  html body .hfam:has(.hfam-visual img) .hfam-visual { position: relative !important; inset: auto !important; height: auto !important; aspect-ratio: 5 / 3; margin: 0 0 32px !important; }
+  html body .hfam:has(.hfam-visual img) .hfam-visual :is(picture, img) { object-position: 78% center !important; }
+  html body .hfam:has(.hfam-visual img)::after { display: none !important; }
+}
+html body .hfam:has(.hfam-visual img) .care-list li a :is(.cl-n, .cl-q) { color: var(--ink, #12263a) !important; }
+html body .hfam:has(.hfam-visual img) .care-list li a .cl-q { opacity: .78; }
+/* care cards keep their own inset, text never on the card edge */
+html body .hfam:has(.hfam-visual img) .care-list li > a { padding: 16px 20px !important; }
+@media (max-width: 900px) {
+  html body .hfam:has(.hfam-visual img) .hfam-visual { grid-row: 1 !important; grid-column: 1 !important; }
+  html body .hfam:has(.hfam-visual img) .hfam-txt { grid-row: 2 !important; }
+}
+html body .visite .visite-txt .steps > li > div { width: 100% !important; align-self: stretch !important; }
+
+/* Wide-photo headers, larger and higher (client, 2026-10-27): on the home, team, care,
+   cabinets and first-visit headers that use the panorama photo, the headline is set
+   larger and the whole block (headline, introduction, buttons) sits in the upper part of
+   the photo instead of resting on the band. The column widens to the left on wide screens
+   and always stops --gap before the first person. The two spacers split the free height
+   1 to 3, so the block sits about a quarter higher than centred and never grows the header. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side) {
+    --gap: clamp(64px, calc(7vw - 30px), 140px);
+    --tl: max(40px, min(var(--lp), calc(var(--px) - var(--gap) - 680px)));
+    --col: min(calc(var(--px) - var(--tl) - var(--gap)), 680px);
+  }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in { flex-direction: column !important; align-items: flex-start !important; justify-content: flex-start !important; padding-top: 56px !important; padding-bottom: calc(1.5cm + 24px) !important; padding-left: var(--tl) !important; }
+  html body .hero.hero-full:not(.hx-side) .hero-txt .acts { margin-top: 32px !important; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in::before { content: ""; flex: 1 1 0; }
+  html body .hero.hero-full:not(.hx-side) .wrap.hero-in::after { content: ""; flex: 3 1 0; }
+  html body .hero.hero-full:not(.hx-side) .hero-txt { align-self: flex-start !important; flex: none !important; width: var(--col) !important; max-width: var(--col) !important; }
+  html body .hero.hero-full:not(.hx-side) .hero-txt h1 { font-size: clamp(46px, calc(var(--col) / 10.2), 72px) !important; max-width: none !important; line-height: 1.06 !important; text-wrap: balance !important; }
+  html body .hero.hero-full.hx-page:not(.hx-side) .hero-txt h1 { font-size: clamp(46px, calc(var(--col) / 8.6), 72px) !important; }
+  html body .hero.hero-full:not(.hx-side) .hero-txt .lead { max-width: min(100%, 600px) !important; display: block !important; -webkit-line-clamp: unset !important; overflow: visible !important; }
+}
+
+/* Photos inside rounded cards (client, 2026-10-27): a photo inset in a rounded card had
+   its own smaller radius, so the two curves did not follow each other. The card keeps its
+   rounded corners and the photo inside it is square. */
+html body main .loc .loc-link .loc-pic, html body main .loc.in .loc-link .loc-pic :is(picture, img):not(.x):not(.y),
+html body main .wrap.visite-in .visite-pic, html body main .wrap.visite-in .visite-pic :is(picture, img):not(.x):not(.y) { border-radius: 0 !important; }
+
+/* Cards in a row start their text on one line (client, 2026-10-27): the steps and the
+   commitments align to the top of each card, so every title starts at the same height. */
+html body .trust-item { align-content: start !important; }
+html body .visite .visite-txt .steps > li { justify-content: flex-start !important; }
+
+/* Diagonal blue fade on the wide-photo headers (client, 2026-10-27): lighter than before and
+   running from the top left, where the text now sits, down to the lower right, instead of a
+   flat left-to-right band. The angle is 105deg, so a point (x, y) sits at x*0.966 + y*0.259
+   along the gradient; the fade reaches zero 10px before the first person's head (people edge
+   --px, heads at about 10% of the height), so faces are never tinted. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) { --a0: 72%; --a1: 64%;
+    --fz: calc(var(--px) * 0.966 + var(--H) * 0.026 - 10px); }
+  html body .hero.hero-full.hero-nuit:not(.hx-side):not(.hero-light) { --a0: 54%; --a1: 44%; }
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) .hero-bg::after { background: linear-gradient(105deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) var(--a0), transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) var(--a1), transparent) calc(var(--fz) - 440px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.82), transparent) calc(var(--fz) - 330px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.6), transparent) calc(var(--fz) - 220px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.36), transparent) calc(var(--fz) - 120px),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.14), transparent) calc(var(--fz) - 50px),
+      transparent var(--fz)) !important; }
+}
+
+/* Care lists on the family photos (client, 2026-10-27): the boxed two-column rows squeezed
+   each description into three to five lines over a photo that showed through. The list is
+   now one column of links in the brand ink, divided by hairlines, each title followed by an
+   arrow, on a near-solid white fade. The second line repeated the title with the town name,
+   so it is left out here; it stays on the care pages themselves. */
+html body .hfam:has(.hfam-visual img)::after { background: linear-gradient(to right, rgba(255, 255, 255, .97) 0%, rgba(255, 255, 255, .95) 40%, rgba(255, 255, 255, .6) 50%, rgba(255, 255, 255, 0) 60%) !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt > .care-list { display: block !important; margin: 28px 0 0 !important; padding: 0 !important; border-top: 1px solid rgba(18, 38, 58, .16) !important; max-width: 520px !important; grid-template-columns: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list > li { display: block !important; margin: 0 !important; border-bottom: 1px solid rgba(18, 38, 58, .16) !important; background: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list > li > a { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 16px !important; padding: 15px 2px !important; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; text-decoration: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list .cl-q { display: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list .cl-n { font-size: 17px !important; line-height: 1.4 !important; font-weight: 600 !important; color: #12263a !important; opacity: 1 !important; }
+html body .hfam:has(.hfam-visual img) .care-list > li > a::before, html body .hfam:has(.hfam-visual img) .care-list > li::before, html body .hfam:has(.hfam-visual img) .care-list > li::after { content: none !important; display: none !important; }
+html body .hfam:has(.hfam-visual img) .care-list > li > a::after { content: "→" !important; position: static !important; inset: auto !important; margin: 0 !important; width: auto !important; height: auto !important; background: none !important; flex: none; font-size: 18px; line-height: 1; color: #12263a !important; transition: transform .2s ease; }
+html body .hfam:has(.hfam-visual img) .care-list > li > a:hover .cl-n { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+html body .hfam:has(.hfam-visual img) .care-list > li > a:hover::after { transform: translateX(4px); }
+html body .hfam:has(.hfam-visual img) .hfam-txt > .care-list ~ * { margin-top: 32px !important; }
+html body .hfam:has(.hfam-visual img) .hfam-txt p:not(.fam-line) { color: #2a3b4d !important; }
+
+/* Home cabinets section (client, 2026-10-27): the heading and its text on the left, and on
+   the right one square photo per cabinet with its name and its town and canton. The full
+   address, hours and contact buttons live on each cabinet page. */
+html body .locs-home-in { display: grid !important; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr) !important; column-gap: clamp(40px, 5vw, 88px) !important; align-items: center !important; }
+html body .locs-home-txt > h2 { margin: 0 0 20px !important; text-align: left !important; }
+html body .locs-home-txt > p { margin: 0 !important; max-width: 46ch; text-align: left !important; }
+html body .loc-tiles { list-style: none !important; margin: 0 !important; padding: 0 !important; display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(16px, 2vw, 28px) !important; }
+html body .loc-tile { margin: 0 !important; padding: 0 !important; background: none !important; }
+html body .loc-tile > a { display: block !important; color: inherit !important; text-decoration: none !important; }
+html body .loc-tile-pic { display: block !important; position: relative !important; aspect-ratio: 1 / 1 !important; overflow: hidden !important; }
+html body .loc-tile-pic :is(picture, img) { display: block !important; width: 100% !important; height: 100% !important; object-fit: cover !important; }
+html body .loc-tile-pic .loc-tag { position: absolute !important; right: 12px !important; bottom: 12px !important; left: auto !important; top: auto !important; }
+html body .loc-tile-name { margin: 18px 0 4px !important; font-size: clamp(20px, 1.6vw, 24px) !important; line-height: 1.25 !important; }
+html body .loc-tile-place { margin: 0 !important; font-size: 16px !important; line-height: 1.5 !important; opacity: .8; }
+html body .loc-tile > a:hover .loc-tile-name { text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; }
+@media (max-width: 900px) {
+  html body .locs-home-in { grid-template-columns: minmax(0, 1fr) !important; row-gap: 32px !important; }
+}
+html body .locs-home-txt > h2 { text-wrap: balance !important; }
+
+/* Footer positioning line (client, 2026-10-27): the positioning sentence in bold, small,
+   right under the logo, then the line on the care offered a little further down. */
+html body .foot-about .foot-hook { margin: 20px 0 0 !important; max-width: 30ch; font-size: 15px !important; line-height: 1.45 !important; }
+html body .foot-about .foot-hook strong { font-weight: 700 !important; }
+html body .foot-about .foot-about-p { margin: 18px 0 0 !important; max-width: 34ch; }
+
+/* Interior headers on a light landscape photo other than the team panorama (blog wall of
+   drawings, care rooms): no faces sit near the text, so the fade runs 280px past the text
+   column instead of stopping at the panorama's first person, and it is a little deeper so
+   white text holds about 5:1 against the white wall. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hx-page:not(.hx-side):not(.hero-light):not(:has(img[src*="equipe-panorama"])) {
+    --a0: 80%; --a1: 74%;
+    --fz: calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 280px); }
+}
+
+
+/* Language switch, every version (client, 2026-10-27): initials only, FR / EN, never the
+   language spelled out, and the menu items get more room between them. */
+html body header.top .lang-switch { display: inline-flex !important; align-items: center !important; gap: 6px !important; font-size: 13px !important; font-weight: 700 !important; line-height: 1 !important; letter-spacing: 0 !important; padding: 8px 2px !important; white-space: nowrap !important; color: inherit; }
+html body header.top .lang-switch .lang-cur { color: inherit !important; }
+html body header.top .lang-switch .lang-sep { opacity: .45; font-weight: 400; }
+html body header.top .lang-switch .lang-other { color: inherit !important; opacity: .7; text-decoration: none !important; }
+html body header.top .lang-switch .lang-other:hover { opacity: 1; text-decoration: underline !important; }
+@media (min-width: 1100px) {
+  html body header.top .nav > ul { column-gap: clamp(14px, 1.6vw, 30px) !important; gap: 0 clamp(14px, 1.6vw, 30px) !important; }
+  html body header.top .top-cta { gap: clamp(10px, 1vw, 16px) !important; }
+}
+@media (max-width: 1099px) { html body header.top .lang-switch { display: none !important; } }
+
+/* Header fades without visible bands (client, 2026-10-27): every stop now follows one eased
+   curve (smoothstep), so no joint between two straight segments shows as a line, and a faint
+   grain dithers the 8-bit steps across large flat areas. Interior photos keep their depth
+   only behind the text and clear 300px after it, instead of washing the whole wall. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) .hero-bg::after { background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(105deg,
+      color-mix(in srgb, var(--cover-box, #2B3A67) var(--a0), transparent) 0,
+      color-mix(in srgb, var(--cover-box, #2B3A67) var(--a1), transparent) calc(var(--fz) - var(--fw, 440px)),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.957), transparent) calc(var(--fz) - var(--fw, 440px) * 0.875),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.844), transparent) calc(var(--fz) - var(--fw, 440px) * 0.75),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.684), transparent) calc(var(--fz) - var(--fw, 440px) * 0.625),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.5), transparent) calc(var(--fz) - var(--fw, 440px) * 0.5),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.316), transparent) calc(var(--fz) - var(--fw, 440px) * 0.375),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.156), transparent) calc(var(--fz) - var(--fw, 440px) * 0.25),
+      color-mix(in srgb, var(--cover-box, #2B3A67) calc(var(--a1) * 0.043), transparent) calc(var(--fz) - var(--fw, 440px) * 0.125),
+      transparent var(--fz)) !important; }
+  html body .hero.hero-full.hx-page:not(.hx-side):not(.hero-light):not(:has(img[src*="equipe-panorama"])) {
+    --a0: 72%; --a1: 70%; --fw: 300px;
+    --fz: calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2 + 300px); }
+  html body .hero.hero-full.hero-light:not(.hx-side) .hero-bg::after { background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(105deg, rgba(255,255,255,.86) 0, rgba(255,255,255,.8) calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2),
+      rgba(255,255,255,.66) calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2 + 75px),
+      rgba(255,255,255,.4) calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2 + 150px),
+      rgba(255,255,255,.14) calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2 + 225px),
+      rgba(255,255,255,0) calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.2 + 300px)) !important; }
+}
+
+/* Care families with a drawing (client, 2026-10-27): the drawing sits on its own colour tile,
+   like the blog cards, at the width of its column, never bare beside the heading. Beside it,
+   the heading, its line, the text, the care list and the button. The list is one column of
+   links divided by hairlines, the same on every family, in the colour of the section. */
+@media (min-width: 901px) {
+  html body .hfam:not(:has(.hfam-visual img)) .hfam-in { display: grid !important; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) !important; column-gap: clamp(48px, 6vw, 104px) !important; align-items: center !important; }
+  html body .hfam:not(:has(.hfam-visual img)) .hfam-visual { grid-column: 1 !important; grid-row: 1 !important; display: block !important; width: 100% !important; max-width: none !important; height: auto !important; margin: 0 !important; position: static !important; transform: none !important; }
+  html body .hfam:not(:has(.hfam-visual img)) .hfam-txt { grid-column: 2 !important; grid-row: 1 !important; display: block !important; max-width: 560px !important; width: 100% !important; }
+  html body .hfam.hfam-flip:not(:has(.hfam-visual img)) .hfam-in { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr) !important; }
+  html body .hfam.hfam-flip:not(:has(.hfam-visual img)) .hfam-visual { grid-column: 2 !important; }
+  html body .hfam.hfam-flip:not(:has(.hfam-visual img)) .hfam-txt { grid-column: 1 !important; justify-self: start !important; }
+}
+html body .hfam .fam-tile { display: grid !important; place-items: center !important; width: 100% !important; height: auto !important; max-height: none !important; aspect-ratio: 4 / 3 !important; background: var(--cover-box, #2B3A67) !important; }
+html body .hfam.band-tint .fam-tile { background: color-mix(in srgb, var(--cover-box, #2B3A67) 82%, #FFFFFF) !important; }
+html body .hfam .fam-tile .ill { width: 30% !important; max-width: 168px !important; --ill-ink: #23FFED; }
+html body .hfam:not(:has(.hfam-visual img)) .hfam-txt > .care-list { display: block !important; margin: 28px 0 0 !important; padding: 0 !important; border-top: 1px solid color-mix(in srgb, currentColor 20%, transparent) !important; max-width: 520px !important; grid-template-columns: none !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li { display: block !important; margin: 0 !important; border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent) !important; background: none !important; border-radius: 0 !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li > a { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 16px !important; padding: 15px 2px !important; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; text-decoration: none !important; color: inherit !important; grid-template-columns: none !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list .cl-q { display: none !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list .cl-n { font-size: 17px !important; line-height: 1.4 !important; font-weight: 600 !important; color: inherit !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li > a::before, html body .hfam:not(:has(.hfam-visual img)) .care-list > li::before, html body .hfam:not(:has(.hfam-visual img)) .care-list > li::after { content: none !important; display: none !important; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li > a::after { content: "→" !important; position: static !important; inset: auto !important; background: none !important; width: auto !important; height: auto !important; flex: none; font-size: 18px; line-height: 1; transition: transform .2s ease; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li > a:hover .cl-n { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+html body .hfam:not(:has(.hfam-visual img)) .care-list > li > a:hover::after { transform: translateX(4px); }
+html body .hfam:not(:has(.hfam-visual img)) .hfam-txt > .care-list ~ * { margin-top: 32px !important; }
+html body .hfam:not(:has(.hfam-visual img)) .hfam-txt > .ill, html body .hfam:not(:has(.hfam-visual img)) .hfam-txt .icon-panel { display: none !important; }
+html body .hfam:not(:has(.hfam-visual img)) .hfam-visual { aspect-ratio: auto !important; padding: 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; }
+html body .hfam .fam-tile .ill { background-color: #23FFED !important; color: #23FFED !important; }
+
+/* One button system, every version and page (client, 2026-10-27): no button carries an
+   outline or an offset shadow, so a pair never mixes an outlined and a plain button. The
+   main action keeps the brand fill, the second action takes a light tint fill with ink text,
+   and every button in the body has one height (52px), the header ones 44px. */
+html body :is(a, button).btn { border: 0 !important; outline-offset: 3px; box-shadow: none !important; min-height: 52px !important; padding-top: 0 !important; padding-bottom: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; line-height: 1.2 !important; }
+html body :is(a, button).btn::before, html body :is(a, button).btn::after { box-shadow: none !important; }
+html body :is(a, button).btn.btn-line, html body main :is(a, button).btn.btn-line, html body .hero :is(a, button).btn.btn-line { background: #E9ECF3 !important; color: #12263A !important; border: 0 !important; }
+html body :is(a, button).btn.btn-line:hover { background: #D7DCE8 !important; color: #12263A !important; }
+html body header.top :is(a, button).btn { min-height: 44px !important; }
+
+/* Version 4 numbers its sections at heading size; the care families no longer carry
+   numbers, as everywhere else (client, 2026-10-27). */
+html body .hfam::before, html body .hfam .hfam-in::before, html body .hfam .hfam-txt::before { content: none !important; display: none !important; }
+/* A drawing tile never takes the colour of the section it sits on. */
+html body .hfam .fam-tile { background: color-mix(in srgb, var(--cover-box, #2B3A67) 88%, #FFFFFF) !important; }
+html body .hfam:not(.band-tint) .fam-tile { background: var(--cover-box, #2B3A67) !important; }
+
+/* Notre façon de travailler starts on the left of the content column (client, 2026-10-27),
+   with more room between the blocks of one section: about 5% of the width between an
+   introduction and what follows it. */
+html body .about .about-diff-h { text-align: left !important; margin-top: clamp(80px, 8vw, 136px) !important; margin-bottom: clamp(28px, 2.6vw, 40px) !important; }
+html body main :is(.sec-head, .sec-head-split) { margin-bottom: clamp(48px, 5vw, 88px) !important; }
+
+/* Care lists on every page (client, 2026-10-27): each care name is a heading in the
+   version's heading face, rows are divided by hairlines, and the row reads as name, then
+   what the page covers in muted text, then an arrow. No tiles, no shaded rows. */
+html body main .care-list:not(.hfam .care-list) { display: block !important; list-style: none !important; margin: 32px 0 0 !important; padding: 0 !important; border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent) !important; grid-template-columns: none !important; gap: 0 !important; }
+html body main .care-list:not(.hfam .care-list) > li { display: block !important; margin: 0 !important; padding: 0 !important; background: none !important; border: 0 !important; border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent) !important; border-radius: 0 !important; box-shadow: none !important; }
+html body main .care-list:not(.hfam .care-list) > li > a { display: grid !important; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) auto !important; align-items: center !important; column-gap: clamp(20px, 3vw, 48px) !important; padding: 22px 4px !important; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; color: inherit !important; text-decoration: none !important; }
+html body main .care-list:not(.hfam .care-list) > li > a::before, html body main .care-list:not(.hfam .care-list) > li::before, html body main .care-list:not(.hfam .care-list) > li::after { content: none !important; display: none !important; }
+html body main .care-list:not(.hfam .care-list) > li > a::after { content: "→" !important; position: static !important; inset: auto !important; background: none !important; width: auto !important; height: auto !important; font-size: 20px; line-height: 1; transition: transform .2s ease; }
+html body main .care-list h3.cl-n { margin: 0 !important; font-size: clamp(19px, 1.5vw, 22px) !important; line-height: 1.3 !important; letter-spacing: -0.005em !important; color: inherit !important; opacity: 1 !important; text-wrap: balance; }
+html body main .care-list:not(.hfam .care-list) .cl-q { display: block !important; margin: 0 !important; font-size: 16px !important; line-height: 1.5 !important; color: inherit !important; opacity: .72 !important; }
+html body main .care-list:not(.hfam .care-list) > li > a:hover h3.cl-n { text-decoration: underline; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+html body main .care-list:not(.hfam .care-list) > li > a:hover::after { transform: translateX(4px); }
+html body main .hfam .care-list h3.cl-n { font-size: 19px !important; }
+@media (max-width: 700px) {
+  html body main .care-list:not(.hfam .care-list) > li > a { grid-template-columns: minmax(0, 1fr) auto !important; row-gap: 4px !important; }
+  html body main .care-list:not(.hfam .care-list) .cl-q { grid-column: 1 !important; grid-row: 2 !important; }
+  html body main .care-list:not(.hfam .care-list) > li > a::after { grid-column: 2 !important; grid-row: 1 / span 2 !important; }
+}
+
+/* Button system, raised above the older hero and band rules that still drew an outline on
+   the second button (the :not(#_) adds id weight without matching anything). */
+html body :is(a, button).btn.btn-line:not(#_) { background: #E9ECF3 !important; color: #12263A !important; border: 0 !important; box-shadow: none !important; }
+html body :is(a, button).btn.btn-line:not(#_):hover { background: #D7DCE8 !important; color: #12263A !important; }
+html body :is(a, button).btn:not(#_) { border: 0 !important; box-shadow: none !important; }
+/* the dropdown chevron belongs to its label: no padding between them */
+@media (min-width: 1100px) {
+  html body header.top .nav li.has-sub > a { padding-right: 4px !important; }
+  html body header.top .nav li.has-sub > .sub-btn { width: 22px !important; min-width: 22px !important; padding: 0 !important; margin-left: 0 !important; }
+}
+
+/* Fade position on the team photo (client, 2026-10-27): the colour holds until it reaches
+   the first person and only then eases out, gently, across the first figure, instead of
+   starting to fade 440px further left. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light):has(img[src*="equipe-panorama"]) {
+    --fw: 460px;
+    --fz: calc(var(--px) * 0.966 + var(--H) * 0.026 + 320px); }
+}
+
+/* Notre façon de travailler starts on the same left edge as the cards below it
+   (client, 2026-10-27): the heading box no longer sits centred at 760px. */
+html body .about .about-diff-h { max-width: none !important; width: auto !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* Gentler drawing tiles (client, 2026-10-27): a smaller square tile in a soft tint of the
+   brand colour, the drawing filling about half of it in the brand ink, so the section reads
+   as text first and the drawing as a quiet accent. On dark sections the tile is a faint
+   lighter shade and the drawing a soft ice blue. */
+html body .hfam:not(:has(.hfam-visual img)) .hfam-visual { display: flex !important; justify-content: center !important; align-items: center !important; }
+html body .hfam .fam-tile:not(#_) { width: min(100%, 300px) !important; aspect-ratio: 1 / 1 !important; background: color-mix(in srgb, var(--cover-box, #2B3A67) 7%, #FFFFFF) !important; }
+html body .hfam .fam-tile:not(#_) .ill { width: 52% !important; max-width: 156px !important; background-color: var(--cover-box, #2B3A67) !important; color: var(--cover-box, #2B3A67) !important; opacity: .9; }
+html body .hfam.band-tint .fam-tile:not(#_), html body .hfam:is([class*="dark"]) .fam-tile:not(#_) { background: rgba(255, 255, 255, .07) !important; }
+html body .hfam.band-tint .fam-tile:not(#_) .ill { background-color: #BFEFF5 !important; color: #BFEFF5 !important; }
+
+/* Equal-height cards with equal insets (alignment gate, 2026-10-27): the title sits at the
+   top of every card and the text rests on the bottom inset, so titles share one top line,
+   texts share one bottom line, and the space above and below the content is the same. */
+html body dl.trust-grid > .trust-item { display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+html body dl.trust-grid > .trust-item > dd { margin-top: auto !important; padding-top: 16px !important; }
+html body .visite .visite-txt ol.steps > li { display: flex !important; flex-direction: column !important; }
+html body .visite .visite-txt ol.steps > li > div { flex: 1 1 auto !important; display: flex !important; flex-direction: column !important; }
+html body .visite .visite-txt ol.steps > li > div > p { margin-top: auto !important; padding-top: 12px !important; margin-bottom: 0 !important; }
+
+/* Blog cards on phones: one inner margin on all four sides, the drawing band inside it. */
+@media (max-width: 700px) {
+  html body ul.posts li.post > a { padding: 20px !important; }
+  html body ul.posts li.post > a > * { padding-left: 0 !important; padding-right: 0 !important; margin-left: 0 !important; margin-right: 0 !important; }
+  html body ul.posts li.post > a > :last-child { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+}
+/* button labels centred on their capitals, every button (alignment gate) */
+html body :is(a, button).btn:not(#_) { text-box: trim-both cap alphabetic; }
+/* steps keep their text across the full card width, phones included */
+html body .visite .visite-txt ol.steps > li, html body .visite .visite-txt ol.steps > li > div { align-items: stretch !important; }
+/* rows and cards measured to cap height and baseline (alignment gate): the care name and the
+   last line of a blog card are trimmed to their ink, so the space above and below matches */
+html body main .care-list h3.cl-n { text-box: trim-both cap alphabetic; }
+html body main .hfam .care-list > li > a { padding-top: 20px !important; padding-bottom: 20px !important; }
+@media (max-width: 700px) { html body ul.posts li.post > a > :last-child { text-box: trim-both cap alphabetic; } }
+/* a family photo in place of a drawing: same square, filled edge to edge */
+html body .hfam .fam-tile.fam-photo:not(#_):not(#__) { background-color: transparent !important; background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important; }
+html body .hfam .fam-tile.fam-photo-prevenir:not(#_):not(#__):not(#___) { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-prevenir-960.webp) center / cover no-repeat !important; }
+html body .hfam .fam-tile.fam-photo-harmoniser:not(#_):not(#__):not(#___) { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-harmoniser-960.webp) center / cover no-repeat !important; }
+html body .hfam .fam-tile.fam-photo-soigner:not(#_):not(#__):not(#___) { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-soigner-960.webp) center / cover no-repeat !important; }
+html body .hfam .fam-tile.fam-photo-restaurer:not(#_):not(#__):not(#___) { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-restaurer-960.webp) center / cover no-repeat !important; }
+
+/* Care families on the modern versions (client, 2026-10-27): a small round photo sits above
+   each family title as a quiet taste of the care, under a gradient in the brand colours so
+   the four photos share one tone. The title, its line, the text and the button form the
+   left column, the care list the right one. */
+@media (min-width: 901px) {
+  html body .hfam:has(.fam-dot) .hfam-in:not(#_) { display: grid !important; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr) !important; column-gap: clamp(48px, 6vw, 112px) !important; row-gap: 0 !important; align-items: start !important; }
+  html body .hfam:has(.fam-dot) .hfam-txt:not(#_) { display: contents !important; }
+  html body .hfam:has(.fam-dot) .hfam-visual:not(#_) { grid-column: 1 !important; grid-row: 1 !important; justify-content: flex-start !important; margin: 0 0 24px !important; }
+  html body .hfam:has(.fam-dot) .hfam-txt > h2:not(#_) { grid-column: 1 !important; grid-row: 2 !important; }
+  html body .hfam:has(.fam-dot) .hfam-txt > .fam-line:not(#_) { grid-column: 1 !important; grid-row: 3 !important; }
+  html body .hfam:has(.fam-dot) .hfam-txt > p:not(.fam-line):not(#_) { grid-column: 1 !important; grid-row: 4 !important; max-width: 46ch; }
+  html body .hfam:has(.fam-dot) .hfam-txt > .btn:not(#_):not(#__) { grid-column: 1 !important; grid-row: 5 !important; justify-self: start !important; margin-top: 28px !important; }
+  html body .hfam:has(.fam-dot) .hfam-txt > .care-list:not(#_) { grid-column: 2 !important; grid-row: 1 / span 5 !important; align-self: center !important; margin: 0 !important; max-width: none !important; }
+}
+html body .hfam .fam-dot:not(#_) { display: block; position: relative; width: clamp(88px, 7.5vw, 112px); aspect-ratio: 1 / 1; border-radius: 50% !important; overflow: hidden; flex: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--cover-box, #2B3A67) 10%, transparent); }
+html body .hfam.band-tint .fam-dot { box-shadow: 0 0 0 4px rgba(255, 255, 255, .14); }
+html body .hfam .fam-dot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(150deg, rgba(35, 255, 237, .18) 0%, color-mix(in srgb, var(--cover-box, #2B3A67) 10%, transparent) 45%, color-mix(in srgb, var(--cover-box, #2B3A67) 55%, transparent) 100%); mix-blend-mode: multiply; }
+html body .hfam .fam-dot.fam-photo-prevenir { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-prevenir-480.webp) center / cover no-repeat; }
+html body .hfam .fam-dot.fam-photo-soigner { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-soigner-480.webp) center / cover no-repeat; }
+html body .hfam .fam-dot.fam-photo-restaurer { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-restaurer-480.webp) center / cover no-repeat; }
+html body .hfam .fam-dot.fam-photo-harmoniser { background: url(/site-cabinetmeyrin-new-v3/assets/img/photos/famille-harmoniser-480.webp) center / cover no-repeat; }
+html body .hfam:has(.fam-dot) .hfam-visual:not(#_) { width: auto !important; height: auto !important; aspect-ratio: auto !important; background: none !important; padding: 0 !important; border: 0 !important; }
+html body .hfam:has(.fam-dot) .hfam-visual:not(#_):not(#__) { justify-self: start !important; justify-content: flex-start !important; margin-left: 0 !important; }
+
+/* Fade on the team photo, final (client, 2026-10-27): the colour holds across the text and
+   ends just before the group, so no person is tinted. At 105deg the zero line leans left as
+   it goes down, so ending it at head height keeps every figure clear from top to bottom;
+   the ease-out is short (260px) so the colour reaches close to the group before fading. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light):has(img[src*="equipe-panorama"]):not(#_) {
+    --fw: 260px;
+    --fz: calc(var(--px) * 0.966 + var(--H) * 0.026 - 6px); }
+}
+
+/* One header gradient on every page (client, 2026-10-27): interior headers use exactly the
+   home header's fade, same colour, same depth, same angle and the same position against
+   the photo, instead of their own deeper, longer variant. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light):not(#_):not(#__) {
+    --a0: 72%; --a1: 64%; --fw: 260px;
+    --fz: calc(var(--px) * 0.966 + var(--H) * 0.026 - 6px); }
+}
+
+/* Soins page families (client, 2026-10-27): every family photo is a square, cropped on its
+   subject, under the brand gradient used on the home page circles, so photos taken in
+   different rooms and light read as one set. */
+html body main .fam .fam-pic:not(#_) { position: relative !important; aspect-ratio: 1 / 1 !important; height: auto !important; max-height: none !important; overflow: hidden !important; align-self: start !important; }
+html body main .fam .fam-pic:not(#_) :is(picture, img) { display: block !important; width: 100% !important; height: 100% !important; aspect-ratio: auto !important; object-fit: cover !important; object-position: 60% center !important; filter: saturate(.88) !important; }
+html body main .fam .fam-pic:not(#_)::after { content: "" !important; position: absolute !important; inset: 0 !important; pointer-events: none !important; border-radius: inherit !important; background: linear-gradient(150deg, rgba(35, 255, 237, .14) 0%, color-mix(in srgb, var(--cover-box, #2B3A67) 8%, transparent) 45%, color-mix(in srgb, var(--cover-box, #2B3A67) 42%, transparent) 100%) !important; mix-blend-mode: multiply !important; display: block !important; }
+html body main .fam .fam-pic:not(#_) img[src*="-large"], html body main .fam .fam-pic:not(#_) img[srcset*="-large"] { object-position: 80% center !important; }
+/* white header text keeps its contrast where a line reaches the eased end of the shared fade
+   over a bright wall: a soft shadow in the band colour, no change to the gradient itself */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) .hero-txt :is(h1, .lead, .crumbs):not(#_) { text-shadow: 0 1px 2px rgba(18, 38, 58, .35), 0 0 14px rgba(18, 38, 58, .35); }
+}
+@media (min-width: 1100px) {
+  /* a header grows with a long introduction instead of clipping its buttons under the band */
+  html body .hero.hero-full:not(.hx-side):not(#_):not(#__) { height: auto !important; min-height: var(--H) !important; }
+  html body .hero.hero-full:not(.hx-side):not(.hero-light) .hero-txt h1:not(#_):not(#__) { text-shadow: 0 1px 2px rgba(18, 38, 58, .3); }
+}
+/* the current page's menu item is a filled pill: it keeps equal padding on both sides, and
+   its chevron follows outside the pill */
+@media (min-width: 1100px) {
+  html body header.top .nav li.has-sub > a[aria-current]:not(#_) { padding-right: var(--nav-pad, 12px) !important; padding-left: var(--nav-pad, 12px) !important; }
+}
+
+/* Care family photos are squares, never circles or rounded tiles (client, 2026-10-27):
+   the small photo above each family title on the home page and the family photos on the
+   Soins page all have straight corners, under the same brand gradient. */
+html body .hfam .fam-dot:not(#_):not(#__), html body .hfam .fam-dot:not(#_):not(#__)::after { border-radius: 0 !important; }
+html body .hfam .fam-dot:not(#_):not(#__) { width: clamp(104px, 8.5vw, 132px) !important; box-shadow: none !important; }
+html body main .fam .fam-pic:not(#_):not(#__), html body main .fam .fam-pic:not(#_):not(#__) :is(picture, img), html body main .fam .fam-pic:not(#_):not(#__)::after { border-radius: 0 !important; }
+
+/* Logo in the navigation bar (client, 2026-10-27): 40px tall, about half the bar, so it sits
+   in proportion with the menu instead of filling the bar. */
+html body header.top .mark img:not(#_) { height: 40px !important; width: auto !important; max-height: none !important; }
+@media (max-width: 700px) { html body header.top .mark img:not(#_) { height: 34px !important; } }
+
+/* Card rows on one shared grid (client, 2026-10-27): in a row of cards, every title starts on
+   one line and every text starts on the next, whatever the length of the title above it.
+   Each card spans two rows of its parent grid and passes them to its own content (subgrid),
+   so the tallest title in the row sets where all the texts begin. The step row runs the full
+   width of the section and the cards get a little more room inside. */
+@media (min-width: 901px) {
+  html body .visite .visite-txt ol.steps:not(#_) { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; grid-template-rows: auto auto !important; column-gap: 16px !important; row-gap: 0 !important; width: 100% !important; max-width: none !important; align-items: stretch !important; }
+  html body .visite .visite-txt ol.steps > li:not(#_) { display: grid !important; grid-row: span 2 !important; grid-template-rows: subgrid !important; row-gap: 0 !important; padding: 28px 24px !important; align-content: start !important; }
+  html body .visite .visite-txt ol.steps > li > div:not(#_) { display: grid !important; grid-row: span 2 !important; grid-template-rows: subgrid !important; row-gap: 0 !important; flex: none !important; }
+  html body .visite .visite-txt ol.steps > li > div > h3:not(#_) { grid-row: 1 !important; margin: 0 0 14px !important; align-self: start !important; }
+  html body .visite .visite-txt ol.steps > li > div > p:not(#_) { grid-row: 2 !important; margin: 0 !important; padding-top: 0 !important; align-self: start !important; }
+  html body dl.trust-grid:not(#_) { grid-auto-rows: auto !important; row-gap: 0 !important; }
+  html body dl.trust-grid > .trust-item:not(#_) { display: grid !important; grid-row: span 2 !important; grid-template-rows: subgrid !important; row-gap: 0 !important; align-content: start !important; margin-bottom: 20px !important; }
+  html body dl.trust-grid > .trust-item > dt:not(#_) { grid-row: 1 !important; margin: 0 0 14px !important; align-self: start !important; }
+  html body dl.trust-grid > .trust-item > dd:not(#_) { grid-row: 2 !important; margin: 0 !important; padding-top: 0 !important; align-self: start !important; }
+}
+
+/* Family photos in the header photos' warm tone (client, 2026-10-27): the navy multiply layer
+   made them read cold, so it is replaced by a light warm grade, a touch more saturation and
+   brightness, a 6% warm tint and a faint warm light from the top left. */
+html body main :is(.fam .fam-pic, .hfam .fam-dot):not(#_):not(#__):not(#___)::after { background: linear-gradient(150deg, rgba(255, 214, 170, .16) 0%, rgba(255, 214, 170, 0) 60%) !important; mix-blend-mode: soft-light !important; }
+html body main .fam .fam-pic:not(#_):not(#__):not(#___) :is(picture, img), html body main .hfam .fam-dot:not(#_):not(#__):not(#___) { filter: saturate(1.06) brightness(1.03) sepia(.06) !important; }
+
+/* Team page portraits (client, 2026-10-27): one exact size in every card, aligned to the top
+   of the card next to the name, never centred against texts of different lengths. */
+@media (min-width: 701px) {
+  html body main .team-row:not(#_) { align-items: start !important; }
+  html body main .team-row > .team-pic:not(#_) { align-self: start !important; width: 200px !important; flex: none !important; }
+  html body main .team-row > .team-pic .disc:not(#_) { width: 200px !important; height: 250px !important; aspect-ratio: auto !important; }
+  html body main .team-row > .team-pic .disc :is(picture, img):not(#_) { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 50% 0 !important; }
+}
+/* Prévenir photo on the Soins page: the people are centred in the square. */
+html body main .fam .fam-pic:not(#_):not(#__) img[src*="echange-patient"], html body main .fam .fam-pic:not(#_):not(#__) img[srcset*="echange-patient"] { object-position: 35% center !important; }
+@media (min-width: 701px) {
+  html body main .team-row:not(#_):not(#__) { align-content: start !important; }
+  html body main .team-row > :is(.team-pic, .team-txt):not(#_):not(#__) { align-self: start !important; margin-top: 0 !important; padding-top: 0 !important; }
+  html body main .team-row > .team-pic .disc:not(#_):not(#__) { padding: 0 !important; border: 0 !important; box-sizing: border-box !important; min-width: 200px !important; }
+}
+html body main .blog-lead-pic img[src*="explication-bureau-large"], html body main .blog-lead-pic img[srcset*="explication-bureau-large"] { object-position: 78% 40% !important; }
+
+/* Home team row (client, 2026-10-27): every name sits on one line, slightly smaller, so every
+   role starts on the same line in every card, whatever the length of the name. */
+html body main .thc-name:not(#_):not(#__) { white-space: nowrap !important; font-size: clamp(16px, 1.2vw, 19px) !important; line-height: 1.3 !important; overflow: visible !important; }
+html body main .thc-role:not(#_):not(#__) { white-space: nowrap !important; font-size: 14px !important; }
+
+/* White text and white hairlines on mid and dark bands (client, 2026-10-27). */
+html body main .tone-dark:not(#_) :is(h2, h3, h4, p, li, dt, dd, .cl-n, .cl-q, .fam-line, .muted, .note, .lead, .link, a:not(.btn), .loc-tile-name, .loc-tile-place, .thc-name, .thc-role):not(.btn *) { color: #FFFFFF !important; }
+html body main .tone-dark:not(#_) :is(.cl-q, .muted, .loc-tile-place, .thc-role) { opacity: .85 !important; }
+html body main .tone-dark:not(#_) .care-list, html body main .tone-dark:not(#_) .care-list > li { border-color: rgba(255, 255, 255, .4) !important; }
+html body main .tone-dark:not(#_) .care-list > li > a::after { color: #FFFFFF !important; }
+
+/* Blog cards in a row: titles on one shared line, texts on the next (card-row rule). */
+@media (min-width: 901px) {
+  html body main ul.posts:not(#_) { grid-auto-rows: auto !important; }
+  html body main ul.posts > li.post:not(#_) { display: grid !important; grid-row: span 5 !important; grid-template-rows: subgrid !important; row-gap: 0 !important; }
+  html body main ul.posts > li.post > a:not(#_) { display: grid !important; grid-row: span 5 !important; grid-template-rows: subgrid !important; row-gap: 0 !important; align-content: start !important; }
+}
+html body main .tone-dark:not(#_):not(#__) :is(.cl-q, .muted, .loc-tile-place, .thc-role) { opacity: 1 !important; }
+/* home blog photo: the treatment room, framed on the three people */
+html body main .blog-lead-pic img[src*="equipe-fauteuil-blog"], html body main .blog-lead-pic img[srcset*="equipe-fauteuil-blog"] { object-position: 50% 45% !important; filter: none !important; }
+html body main .video-slot .video-txt :is(*, p, b, .video-k):not(#_):not(#__) { color: #FFFFFF !important; opacity: 1 !important; }
+
+/* Band under every header halved (client, 2026-10-27): 14px instead of 28px, and the header and
+   its photo run 14px longer, so the photo fills the space the band gave back. */
+html body .next-fade:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: 14px !important; }
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { min-height: calc(var(--H) + 14px) !important; height: auto !important; }
+  html body .hero.hero-full .wrap.hero-in:not(#_):not(#__) { padding-bottom: calc(14px + 40px) !important; }
+}
+
+/* Version 1, Moderne 1, Cabinet (ex Cabinet plus vif). Bricolage Grotesque pour les titres, DM Sans pour le texte.
+   Une page blanche, de larges bandes Twilight Indigo avec texte blanc et accents Neon Ice,
+   des tuiles indigo qui portent les dessins au trait, une bande Neon Ice pour la prise de rendez-vous.
+   Palette de marque seule : Neon Ice, blanc, Grey Olive, Twilight Indigo, noir.
+   Neon Ice n'est jamais du texte ni un trait sur fond clair : il vit sur l'indigo ou le noir,
+   ou comme aplat portant du texte indigo.
+   Tour 2 : pas de filets ni de cadres décoratifs, des aplats et de l'espace ; colonne plus étroite. */
+
+:root {
+  --neon: #23FFED; --indigo: #2B3A67; --olive: #7C898B; --black: #000000;
+  --neon-soft: rgba(35, 255, 237, .8); --neon-mid: rgba(35, 255, 237, .6);
+  /* Roles for a light surface. Dark bands redefine them in one block below, so a component
+     never needs to know which band it sits in. */
+  --fg: #000000; --head: var(--indigo); --link: var(--indigo); --uline: currentColor;
+  --mute: color-mix(in srgb, var(--indigo) 82%, #FFFFFF);
+  --rule: color-mix(in srgb, var(--indigo) 30%, #FFFFFF); --edge: var(--indigo);
+  --accent: var(--indigo); --focus: var(--indigo);
+  --fill: color-mix(in srgb, var(--olive) 16%, #FFFFFF); --btn2-bg: color-mix(in srgb, var(--olive) 22%, #FFFFFF);
+  --btn-bg: var(--indigo); --btn-fg: #FFFFFF; --btn-hover-bg: #000000; --btn-hover-fg: #FFFFFF;
+  --line-fg: var(--indigo); --line-hover-fg: #FFFFFF;
+  --disp: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --body: 17px; --lh: 1.6; --measure: 60ch; --pad-x: 24px; --band: 96px; --wrap: 1120px;
+  --hh: 80px; --r: 999px; --r-card: 28px; --r-tile: 32px; --r-chip: 16px;
+  --ease: cubic-bezier(.22, .8, .25, 1); --t: .35s;
+}
+
+/* Dark surfaces: indigo bands, indigo cards, the mobile menu and the footer. */
+.hero-cover, .team-home, .hfam.band-tint, .fam.band-tint, .phero, .gallery-sec, .cab-contact, .form-sec,
+.philo, .vital, .visite, .others, .faq, .foot, .menu, .side, .team-row, .loc, .ccol, .about-txt .statement, .phero-urg,
+.trust-item:nth-child(1), .trust-item:nth-child(4) {
+  --fg: #FFFFFF; --head: #FFFFFF; --link: #FFFFFF; --uline: var(--neon-mid);
+  --mute: rgba(255, 255, 255, .84); --rule: rgba(255, 255, 255, .3); --edge: rgba(255, 255, 255, .5);
+  --accent: var(--neon-soft); --focus: var(--neon); --ill-ink: var(--neon);
+  --fill: rgba(255, 255, 255, .1); --btn2-bg: rgba(255, 255, 255, .16);
+  --btn-bg: var(--neon); --btn-fg: var(--indigo); --btn-hover-bg: #FFFFFF; --btn-hover-fg: var(--indigo);
+  --line-fg: #FFFFFF; --line-hover-fg: var(--indigo);
+  color: var(--fg);
+}
+.hero-cover { background: var(--cover-box, var(--indigo)); }
+.team-home, .hfam.band-tint, .fam.band-tint, .phero, .gallery-sec, .cab-contact, .form-sec,
+.philo, .vital, .others, .faq, .foot, .menu { background: var(--indigo); }
+.phero-urg, .visite { background: var(--black); }
+.side, .team-row, .loc, .ccol, .about-txt .statement, .trust-item:nth-child(1), .trust-item:nth-child(4) { background: var(--indigo); }
+/* Colour blocks on the other two trust tiles: Neon Ice fill, indigo text. */
+.trust-item:nth-child(2), .trust-item:nth-child(3) { background: var(--neon-soft); --head: var(--indigo); --fg: var(--indigo); --mute: var(--indigo); color: var(--indigo); }
+/* White cards that sit on an indigo band go back to the light roles. */
+.others-list li, .form {
+  --fg: #000000; --head: var(--indigo); --link: var(--indigo); --uline: currentColor;
+  --mute: color-mix(in srgb, var(--indigo) 82%, #FFFFFF); --rule: color-mix(in srgb, var(--indigo) 30%, #FFFFFF); --edge: var(--indigo);
+  --accent: var(--indigo); --focus: var(--indigo); --ill-ink: var(--indigo);
+  --fill: color-mix(in srgb, var(--olive) 16%, #FFFFFF); --btn2-bg: color-mix(in srgb, var(--olive) 22%, #FFFFFF);
+  --btn-bg: var(--indigo); --btn-fg: #FFFFFF; --btn-hover-bg: #000000; --btn-hover-fg: #FFFFFF;
+  --line-fg: var(--indigo); --line-hover-fg: #FFFFFF;
+  color: var(--fg); background: #FFFFFF;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: #FFFFFF; color: var(--fg); font-family: var(--sans); font-size: var(--body); line-height: var(--lh); -webkit-font-smoothing: antialiased; }
+body.menu-open { overflow: hidden; }
+img, picture, svg { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: var(--link); text-decoration-line: underline; text-decoration-color: var(--uline); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+.skip { position: absolute; left: 16px; top: -60px; background: var(--indigo); color: #FFFFFF; padding: 12px 18px; border-radius: var(--r); z-index: 100; }
+.skip:focus { top: 16px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--pad-x); }
+.muted { color: var(--mute); }
+.small { font-size: 16px; }
+[hidden] { display: none !important; }
+
+/* type */
+h1, h2, h3 { font-family: var(--disp); font-weight: 700; color: var(--head); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 4.6vw, 64px); line-height: 1.08; letter-spacing: -.03em; font-weight: 800; }
+h2 { font-size: clamp(30px, 3.5vw, 48px); line-height: 1.15; letter-spacing: -.025em; }
+h3 { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.25; letter-spacing: 0; }
+p { margin: 0; max-width: var(--measure); text-wrap: pretty; }
+p + p { margin-top: .9em; }
+.lead { font-size: clamp(18px, 1.5vw, 21px); line-height: 1.6; max-width: 52ch; }
+.statement { display: block; font-family: var(--disp); font-weight: 700; font-size: clamp(26px, 3vw, 40px); line-height: 1.2; letter-spacing: -.02em; color: var(--head); max-width: 24ch; text-wrap: balance; }
+.statement + p { margin-top: 20px; }
+.prose h2 { margin: 2.6rem 0 .6rem; font-size: clamp(26px, 2.6vw, 34px); letter-spacing: -.02em; }
+.prose h2:first-child { margin-top: 0; }
+.prose h2 + p { margin-top: 0; }
+.prose .note { margin-top: 2.4rem; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+dl { margin: 0; }
+dt { font-weight: 700; font-size: 16px; line-height: 1.4; color: var(--head); margin-bottom: 4px; }
+dd { margin: 0; }
+.link { font-weight: 700; }
+/* A note is a full outline, never a stripe down one side of a rounded box. */
+.note { color: var(--fg); font-size: 16px; line-height: 1.55; max-width: var(--measure); padding: 20px 24px; background: var(--fill); border-radius: 20px; }
+.inline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.inline li a { display: inline-block; padding: 9px 16px 7px; border-radius: var(--r); background: var(--fill); text-decoration: none; font-size: 15px; font-weight: 500; line-height: 1.3; transition: background var(--t), color var(--t); }
+.inline li a:hover { background: var(--neon); color: var(--indigo); }
+.inline-big li a { font-size: 16px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 12px 28px; border-radius: var(--r); font-family: var(--sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer; border: 2px solid var(--btn-bg); background: var(--btn-bg); color: var(--btn-fg); transition: transform var(--t) var(--ease), background var(--t), color var(--t), border-color var(--t); }
+.btn:hover { background: var(--btn-hover-bg); border-color: var(--btn-hover-bg); color: var(--btn-hover-fg); transform: translateY(-2px); }
+.btn-line { background: var(--btn2-bg); border-color: var(--btn2-bg); color: var(--line-fg); }
+.btn-line:hover { background: var(--line-fg); border-color: var(--line-fg); color: var(--line-hover-fg); }
+.btn-big { min-height: 60px; padding: 14px 34px; font-size: 17px; }
+.acts { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 32px; align-items: center; }
+.acts-note { flex-basis: 100%; font-size: 16px; margin: 4px 0 0; }
+
+/* header, white and sticky */
+.top { position: sticky; top: 0; z-index: 50; background: #FFFFFF; transition: box-shadow var(--t); }
+.top.scrolled { box-shadow: 0 8px 24px rgba(43, 58, 103, .1); }
+.top-in { display: flex; align-items: center; gap: 24px; min-height: 80px; }
+.top .wrap { max-width: 1240px; }
+.mark { display: flex; flex: none; text-decoration: none; }
+.mark img { height: 52px; width: auto; }
+/* The nav takes the free width and packs its links to the right, so it and the action group read as two groups on one row. */
+.nav { flex: 1; display: flex; justify-content: flex-end; align-items: center; align-self: stretch; }
+.nav ul { display: flex; align-items: center; gap: 4px; }
+.nav a { display: block; padding: 11px 12px 9px; border-radius: var(--r); text-decoration: none; color: var(--indigo); font-weight: 500; font-size: 15px; line-height: 1.3; white-space: nowrap; transition: background var(--t); }
+.nav a:hover { background: color-mix(in srgb, var(--indigo) 9%, #FFFFFF); }
+.nav a[aria-current="page"] { background: var(--indigo); color: #FFFFFF; }
+.top-cta { display: flex; align-items: center; gap: 10px; }
+.top-cta .btn { min-height: 44px; padding: 10px 20px; white-space: nowrap; }
+.search-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; color: var(--indigo); border-radius: 50%; }
+.search-btn svg { width: 22px; height: 22px; }
+.search-btn:hover { background: color-mix(in srgb, var(--indigo) 9%, #FFFFFF); }
+.lang { text-decoration: none; font-weight: 700; font-size: 15px; padding: 8px 10px; color: var(--indigo); white-space: nowrap; }
+.burger { display: none; margin-left: auto; width: 48px; height: 48px; border: 0; background: none; cursor: pointer; padding: 12px; }
+.burger span { display: block; height: 3px; border-radius: 2px; background: var(--indigo); margin: 6px 0; transition: transform var(--t) var(--ease); }
+.burger[aria-expanded="true"] span:first-child { transform: translateY(4.5px) rotate(45deg); }
+.burger[aria-expanded="true"] span:last-child { transform: translateY(-4.5px) rotate(-45deg); }
+.has-sub { position: relative; display: flex; align-items: center; }
+.sub-btn { width: 24px; height: 44px; border: 0; background: none; cursor: pointer; position: relative; margin-left: 0; color: var(--indigo); border-radius: 6px; }
+.sub-btn::after { content: ""; position: absolute; left: 4px; top: 16px; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+.nav ul.sub, .menu ul.sub { display: none; }
+.sub { position: absolute; left: 0; top: 100%; min-width: 250px; padding: 10px; z-index: 60; background: #FFFFFF; border-radius: 22px; box-shadow: 0 18px 44px rgba(43, 58, 103, .18); flex-direction: column; align-items: stretch; gap: 0; }
+.nav .has-sub:hover ul.sub, .nav .has-sub.open ul.sub, .nav .has-sub:focus-within ul.sub { display: block; }
+.sub li a { display: block; padding: 11px 16px; border-radius: 14px; font-size: 15.5px; }
+.sub li:last-child a { font-weight: 700; }
+
+/* mobile menu, an indigo sheet under the header */
+.menu { position: absolute; left: 0; right: 0; top: 100%; height: calc(100vh - 68px); height: calc(100dvh - 68px); overflow: auto; z-index: 49; }
+.menu-in { padding-block: 32px 120px; }
+.menu nav a { display: block; font-family: var(--disp); font-weight: 700; font-size: clamp(30px, 8vw, 40px); line-height: 1.2; letter-spacing: -.02em; color: #FFFFFF; text-decoration: none; padding: 10px 0; }
+.menu nav a[aria-current="page"] { color: var(--neon-soft); }
+.menu .has-sub { flex-wrap: wrap; }
+.menu .has-sub > a { flex: 1; }
+.menu .has-sub .sub-btn { width: 44px; height: 44px; margin: 0; background: rgba(255, 255, 255, .16); border-radius: 50%; color: #FFFFFF; }
+.menu .has-sub .sub-btn::after { left: 16px; top: 14px; }
+.menu .sub { position: static; background: none; box-shadow: none; padding: 0 0 8px 16px; width: 100%; }
+.menu .has-sub.open ul.sub { display: block; }
+.menu .sub li a { font-size: 20px; padding: 8px 0; color: #FFFFFF; border-radius: 0; }
+.menu-acts { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
+.menu-acts .btn { width: 100%; }
+.menu-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 20px; }
+.menu-links a { color: #FFFFFF; font-weight: 700; }
+.menu-info { margin-top: 24px; color: var(--mute); font-size: 16px; }
+.dock { display: none; }
+
+/* search sheet */
+.search { position: absolute; left: 0; right: 0; top: 100%; z-index: 55; background: #FFFFFF; box-shadow: 0 24px 60px rgba(43, 58, 103, .2); }
+.search-in { padding-block: 24px 32px; }
+.search-label { display: block; font-weight: 700; font-size: 16px; margin-bottom: 8px; color: var(--indigo); }
+.search-row { display: flex; gap: 10px; align-items: center; }
+.search-row input { flex: 1; font: inherit; font-size: 20px; padding: 14px 20px; min-height: 56px; border: 2px solid var(--olive); border-radius: 18px; background: #FFFFFF; color: #000000; }
+.search-row input:focus { border-color: var(--indigo); outline: 3px solid var(--indigo); outline-offset: 1px; }
+.search-close { width: 56px; height: 56px; border: 0; font-size: 30px; cursor: pointer; background: none; color: var(--indigo); }
+.search-hint { font-size: 16px; margin-top: 10px; color: var(--mute); }
+.search-results { margin-top: 16px; display: grid; gap: 6px; }
+.search-results a { display: block; padding: 14px 18px; text-decoration: none; color: #000000; border-radius: 16px; }
+.search-results a:hover { background: color-mix(in srgb, var(--indigo) 9%, #FFFFFF); }
+.search-results b { display: block; font-size: 17px; color: var(--indigo); }
+.search-results span { display: block; font-size: 15px; color: var(--mute); }
+.search-results .none { padding: 14px 18px; }
+body.search-open .search-btn { opacity: .5; }
+
+/* bands */
+section { padding: var(--band) 0; }
+.sec-head { max-width: 760px; margin-bottom: 48px; }
+.sec-head h2 { margin-bottom: 16px; }
+.sec-head-split { display: grid; grid-template-columns: 7fr 5fr; gap: 56px; max-width: none; align-items: end; }
+.sec-head-split h2 { margin-bottom: 0; }
+.sec-head-split p { max-width: 36em; }
+
+/* Cover hero (home and team page). Geometry is shared (text left, team photo whole at 3:2 on the right);
+   this sets colour and type only. Indigo band, white type, neon primary button, a filled secondary button. */
+.hero.hero-cover { --cover-box: var(--indigo); --cover-ink: #FFFFFF; }
+.hero.hero-cover h1 { font-size: clamp(34px, 3.8vw, 54px); line-height: 1.08; font-weight: 800; letter-spacing: -.03em; }
+.hero.hero-cover .lead { font-size: clamp(18px, 1.4vw, 20px); line-height: 1.6; opacity: 1; }
+.hero.hero-cover .btn.btn-line { background: rgba(255, 255, 255, .16); border-color: transparent; color: #FFFFFF; }
+.hero.hero-cover .btn.btn-line:hover { background: #FFFFFF; border-color: #FFFFFF; color: var(--indigo); }
+
+/* about: text left, the philosophy as an indigo card right, four commitments below */
+.about-in { display: block; }
+.about-txt { display: grid; grid-template-columns: 7fr 5fr; column-gap: 72px; align-items: start; max-width: none; }
+.about-txt h2 { grid-column: 1; grid-row: 1; max-width: 18ch; }
+.about-txt .lead { grid-column: 1; grid-row: 2; margin-top: 24px; max-width: 34em; }
+.about-txt .statement { grid-column: 2; grid-row: 1 / span 2; align-self: center; max-width: none; margin: 0; padding: 44px 44px; border-radius: var(--r-card); font-size: clamp(24px, 2.4vw, 34px); text-decoration-line: underline; text-decoration-color: var(--neon); text-decoration-thickness: .09em; text-underline-offset: .18em; text-decoration-skip-ink: none; }
+.about-diff-h { margin: 72px 0 28px; font-size: clamp(26px, 2.6vw, 34px); }
+.trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+.trust-item { border-radius: var(--r-card); padding: 36px 40px; }
+.trust-item dt { font-family: var(--disp); font-weight: 700; font-size: clamp(22px, 2vw, 26px); line-height: 1.25; margin-bottom: 10px; }
+.trust-item dd { max-width: 44ch; }
+
+/* team strip on home and on the team page: one 4:5 white frame for every portrait */
+.team-home-label { display: none; }
+.thc-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 24px; }
+.thc a { display: block; text-decoration: none; color: #FFFFFF; }
+.thc-name { display: block; font-family: var(--disp); font-weight: 700; font-size: 18px; line-height: 1.25; margin-top: 14px; }
+.thc-role { display: block; color: var(--mute); font-size: 15px; line-height: 1.4; margin-top: 4px; }
+.thc a:hover .thc-name { text-decoration: underline; text-decoration-color: var(--neon); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.disc, .thc-pic, .team-pic .disc, .disc-big { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #FFFFFF; border-radius: 0; }
+.disc picture, .thc-pic picture { display: block; width: 100%; height: 100%; }
+.disc img, .thc-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transform: none; }
+.team-home .sec-head-split { margin-bottom: 48px; }
+.team-home .more { margin-top: 40px; }
+.team-home .link { color: #FFFFFF; }
+
+/* the two practices as indigo cards */
+.locs .sec-head-split { margin-bottom: 48px; }
+.loc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.loc { padding: 24px 24px 32px; border-radius: var(--r-card); }
+.loc-link { display: block; text-decoration: none; color: inherit; }
+.loc-pic { display: block; position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #FFFFFF; }
+.loc-pic picture, .loc-pic img { width: 100%; height: 100%; object-fit: cover; }
+.loc-tag { position: absolute; right: 16px; bottom: 16px; background: var(--neon-soft); color: var(--indigo); font-size: 14px; font-weight: 700; line-height: 1.3; padding: 6px 14px; border-radius: var(--r); }
+.loc-body { display: block; padding: 24px 8px 0; }
+.loc-name { display: block; font-family: var(--disp); font-weight: 800; font-size: clamp(34px, 3.4vw, 46px); line-height: 1.1; letter-spacing: -.03em; color: #FFFFFF; margin-bottom: 12px; }
+.loc-addr, .loc-hours { display: block; color: var(--mute); }
+.loc-hours { margin-top: 4px; }
+.loc-go { display: inline-block; margin-top: 16px; font-weight: 700; color: #FFFFFF; text-decoration: underline; text-decoration-color: var(--neon); text-decoration-thickness: 3px; text-underline-offset: .22em; }
+.loc-link:hover .loc-go { color: var(--neon); }
+.loc-acts { margin: 24px 8px 0; flex-direction: column; align-items: stretch; gap: 12px; }
+.loc-acts .btn { width: 100%; }
+
+/* treatment families on home, text and a tile with the line drawing */
+.soins-head { padding: 0; }
+.soins-head .sec-head { margin-bottom: 0; max-width: var(--wrap); margin-inline: auto; }
+.soins-head + .hfam { padding-top: 72px; }
+.hfam-in { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 40px; align-items: start; }
+.hfam-flip .hfam-in { grid-template-columns: 88px minmax(0, 1fr); }
+/* The line drawing is a wayfinding mark beside the family name: 88px, high contrast, generous space. */
+.hfam-visual, .hfam-flip .hfam-visual { order: 0; display: grid; place-items: center; width: 88px; aspect-ratio: 1 / 1; padding: 12px; border-radius: 24px; background: var(--indigo); --ill-ink: var(--neon); }
+.hfam-flip .hfam-visual { background: var(--neon-soft); --ill-ink: var(--indigo); }
+.hfam-txt { max-width: 760px; }
+.hfam-n { display: none; }
+.hfam-txt h2 { font-size: clamp(34px, 4vw, 54px); line-height: 1.1; margin-bottom: 8px; }
+.fam-line { font-family: var(--disp); font-weight: 700; font-size: 22px; line-height: 1.3; color: var(--head); margin-top: 8px; }
+.hfam-txt > p:not(.fam-line), .fam-txt > p:not(.fam-line) { margin-top: 16px; }
+.care-list { margin-top: 32px; display: grid; gap: 10px; }
+.care-list a { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 20px; padding: 16px 22px; text-decoration: none; color: var(--fg); align-items: baseline; background: var(--fill); border-radius: 18px; transition: background var(--t), color var(--t); }
+.care-list a:hover { background: var(--indigo); color: #FFFFFF; }
+.band-tint .care-list a:hover, .fam.band-tint .care-list a:hover { background: var(--neon); color: var(--indigo); }
+.cl-n { font-weight: 700; line-height: 1.35; }
+.cl-q { font-size: 16px; line-height: 1.45; color: var(--mute); }
+.care-list a:hover .cl-q { color: inherit; }
+.hfam-txt .btn { margin-top: 28px; }
+
+/* first visit on home: photo, then the numbered path. The number is set in the title's own
+   size and font so it reads as part of the line. */
+.visite-in { display: grid; grid-template-columns: 5fr 6fr; gap: 80px; align-items: start; }
+.visite-pic { align-self: stretch; min-height: 460px; overflow: hidden; }
+.visite-pic picture { display: block; height: 100%; min-height: inherit; }
+.visite-pic img { width: 100%; height: 100%; object-fit: cover; }
+.visite-txt h2 { margin-bottom: 32px; }
+.steps { display: grid; gap: 12px; }
+.steps li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 24px 28px; background: var(--fill); border-radius: 22px; }
+.num { font-family: var(--disp); font-weight: 700; font-size: clamp(22px, 2.2vw, 28px); line-height: 1.25; letter-spacing: 0; color: var(--accent); font-variant-numeric: tabular-nums; }
+.steps h3 { margin-bottom: 6px; }
+.steps p { font-size: 16px; max-width: 34em; }
+.visite-txt .link { display: inline-block; margin-top: 28px; }
+
+/* blog cards */
+.blog-sec .sec-head-split { margin-bottom: 48px; }
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.posts-big { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 40px; }
+.post a { display: flex; flex-direction: column; position: relative; text-decoration: none; color: var(--fg); height: 100%; }
+.post picture { display: block; aspect-ratio: 16 / 10; overflow: hidden; margin-bottom: 20px; order: 0; }
+.post img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.post a:hover img { transform: scale(1.03); }
+.post-k { position: absolute; top: 14px; left: 14px; z-index: 1; background: var(--neon-soft); color: var(--indigo); font-size: 14px; font-weight: 700; line-height: 1.3; padding: 6px 14px; border-radius: var(--r); }
+.post h2, .post h3 { order: 1; font-size: clamp(22px, 2vw, 26px); line-height: 1.25; margin-bottom: 8px; letter-spacing: 0; }
+.post a:hover h2, .post a:hover h3 { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .2em; }
+.post p { order: 2; font-size: 16px; }
+.post .link { order: 3; align-self: flex-start; margin-top: auto; padding-top: 14px; color: var(--indigo); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.blog-sec .more { margin-top: 40px; }
+
+/* closing band, the one Neon Ice surface, text and buttons in indigo */
+.close { background: var(--neon); color: var(--indigo); --head: var(--indigo); --fg: var(--indigo); --link: var(--indigo); --mute: var(--indigo); --btn-bg: var(--indigo); --btn-fg: #FFFFFF; --btn-hover-bg: #000000; --btn-hover-fg: #FFFFFF; --line-fg: var(--indigo); --line-hover-fg: var(--neon); --btn2-bg: rgba(43, 58, 103, .14); --focus: var(--indigo); }
+.close-in { display: grid; grid-template-columns: 7fr 5fr; gap: 64px; align-items: center; }
+.close h2 { font-size: clamp(34px, 4.4vw, 60px); line-height: 1.1; margin-bottom: 18px; max-width: 16ch; }
+.close .acts { margin-top: 0; flex-direction: column; align-items: stretch; gap: 14px; }
+.close .acts .btn { width: 100%; }
+.close .acts-note { text-align: left; }
+
+/* footer, the combination the client already likes */
+.foot { padding: 80px 0 64px; color: var(--mute); }
+.foot a { color: #FFFFFF; }
+.foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: 40px; }
+.foot-about p { max-width: 32ch; }
+.foot-logo { width: 168px; height: auto; margin-bottom: 22px; }
+.foot-h { font-family: var(--sans); font-size: 16px; font-weight: 700; line-height: 1.3; letter-spacing: 0; color: var(--neon-soft); margin: 0 0 14px; }
+.foot li + li { margin-top: 8px; }
+.foot-legal { margin-top: 56px; font-size: 16px; }
+.foot-legal p { max-width: 40em; }
+
+/* page openers, indigo with white text */
+.phero { padding: 56px 0 80px; }
+.phero-in { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+.phero-img .phero-in { grid-template-columns: 7fr 5fr; }
+.phero-side .phero-in { grid-template-columns: minmax(0, 1fr) 96px; gap: 48px; align-items: start; }
+.phero h1 { font-size: clamp(32px, 4.4vw, 60px); max-width: 20ch; }
+.phero .lead { margin-top: 24px; }
+.phero .acts { margin-top: 32px; }
+.phero-pic { aspect-ratio: 4 / 3; overflow: hidden; }
+.phero-pic picture { display: block; height: 100%; }
+.phero-pic img { width: 100%; height: 100%; object-fit: cover; }
+.phero-bg { display: none; }
+.icon-panel { display: grid; place-items: center; width: 96px; aspect-ratio: 1 / 1; padding: 18px; border-radius: 28px; background: var(--neon-soft); --ill-ink: var(--indigo); }
+.icon-panel .ill { width: 100%; }
+.crumbs { margin-bottom: 28px; font-size: 15px; line-height: 1.4; }
+.crumbs ol { display: flex; flex-wrap: wrap; gap: 6px 10px; }
+.crumbs li + li::before { content: "/"; margin-right: 10px; opacity: .6; }
+.crumbs a { color: var(--mute); }
+.crumbs li[aria-current] { font-weight: 700; color: var(--fg); }
+.phero-banner-pic { margin-top: 48px; }
+.phero-team .phero-banner-pic { margin-top: 56px; }
+.team-group { padding: 80px 0; }
+.team-group + .team-sec { padding-top: 0; }
+.team-group picture { display: block; aspect-ratio: 3 / 2; overflow: hidden; }
+.team-group img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+
+/* emergencies: a black opener, a neon call card */
+.phero-urg .phero-in { grid-template-columns: 7fr 5fr; align-items: start; }
+.urg-tel { display: flex; flex-direction: column; background: var(--neon); color: var(--indigo); border-radius: var(--r-card); padding: 40px; }
+.urg-num { order: 0; display: block; font-family: var(--disp); font-weight: 800; font-size: clamp(36px, 4.2vw, 58px); letter-spacing: -.03em; line-height: 1.05; color: var(--indigo); text-decoration: none; margin-bottom: 14px; }
+.urg-num:hover { text-decoration: underline; text-decoration-thickness: 3px; }
+.urg-k { order: 1; font-weight: 700; font-size: 17px; line-height: 1.4; margin-bottom: 6px; }
+.urg-tel p:last-child { order: 2; }
+.urg-in { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.urg-in > div { background: var(--fill); border-radius: var(--r-card); padding: 40px; }
+.urg-in h2 { margin-bottom: 20px; font-size: clamp(26px, 2.6vw, 34px); }
+.check li { position: relative; padding: 9px 0 9px 32px; max-width: 52ch; }
+.check li::before { content: ""; position: absolute; left: 4px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--indigo); }
+.vital-in { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+.vital h2 { margin-bottom: 14px; font-size: clamp(28px, 2.8vw, 38px); }
+
+/* practices pages */
+.compare h2 { margin-bottom: 32px; }
+.table-wrap { overflow-x: auto; border-radius: var(--r-card); }
+.cmp { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.5; }
+.cmp th, .cmp td { text-align: left; padding: 18px 28px; vertical-align: top; }
+.cmp thead th { font-family: var(--disp); font-size: 26px; font-weight: 800; color: #FFFFFF; background: var(--indigo); padding-block: 20px; }
+.cmp tbody tr:nth-child(odd) { background: var(--fill); }
+.cmp tbody th { font-weight: 700; color: var(--indigo); width: 180px; }
+.compare .note { margin-top: 24px; }
+.loc-facts-in { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 72px; align-items: start; }
+.facts { display: grid; gap: 10px; }
+.facts > div { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 24px; padding: 23px 26px 17px; background: var(--fill); border-radius: 18px; }
+.facts dd { max-width: 62ch; }
+.facts-tight > div { grid-template-columns: 140px minmax(0, 1fr); padding: 19px 22px 13px; }
+.side { border-radius: var(--r-card); padding: 36px; }
+.side-h { font-family: var(--disp); font-size: 22px; font-weight: 700; line-height: 1.25; color: var(--head); margin: 0 0 16px; letter-spacing: 0; }
+.side .side-h + .side-h, .side ul + .side-h { margin-top: 32px; }
+.side-links li + li { margin-top: 10px; }
+.side .btn { margin-top: 14px; width: fit-content; max-width: 100%; }
+.side p + .btn { margin-top: 24px; }
+.side-list li { padding: 11px 0; }
+.side p.muted { margin-top: 16px; font-size: 16px; }
+.map-sec { padding: 48px 0 var(--band); }
+.form-sec + .map-sec { padding-top: var(--band); }
+.map { aspect-ratio: 16 / 7; overflow: hidden; background: color-mix(in srgb, var(--indigo) 10%, #FFFFFF); }
+.map iframe { width: 100%; height: 100%; border: 0; }
+.gallery-sec h2 { margin-bottom: 40px; }
+.gallery { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+.gallery figure { margin: 0; display: flex; flex-direction: column; }
+.gallery picture { flex: 1; display: block; overflow: hidden; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; }
+.gallery .g1 { grid-column: span 7; grid-row: span 2; }
+.gallery .g1 img { aspect-ratio: 3 / 4; }
+
+.gallery .g2 img, .gallery .g3 img { min-height: 260px; }
+.gallery .g4 { grid-column: span 12; }
+.gallery .g4 img { aspect-ratio: 21 / 8; }
+.gallery figcaption { padding: 14px 0 0; font-size: 16px; line-height: 1.5; color: var(--mute); }
+.practice-facts h2 { margin-bottom: 32px; }
+.practice-facts .facts > div { padding: 24px 32px; }
+.cab-soins h2 { margin-bottom: 32px; }
+.fam-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fam-list a { display: block; padding: 24px 28px; text-decoration: none; color: var(--fg); background: var(--fill); border-radius: 22px; height: 100%; transition: background var(--t), color var(--t); }
+.fam-list a:hover { background: var(--indigo); color: #FFFFFF; }
+.fam-list b { display: block; font-family: var(--disp); font-size: 24px; line-height: 1.25; margin-bottom: 6px; color: inherit; }
+.fam-list a:not(:hover) b { color: var(--indigo); }
+.fam-list span { font-size: 16px; line-height: 1.5; }
+.cab-contact-in { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.cab-contact-in h2 { margin-bottom: 14px; }
+.cab-contact-in .acts { grid-column: 1 / -1; margin-top: 0; }
+.team .sec-head { margin-bottom: 40px; }
+.portraits { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+.person a { display: block; text-decoration: none; color: var(--fg); }
+.person-name { display: block; margin-top: 14px; font-family: var(--disp); font-weight: 700; font-size: 19px; line-height: 1.25; color: var(--head); }
+.person-role { display: block; color: var(--mute); font-size: 15px; line-height: 1.4; margin-top: 4px; }
+.person a:hover .person-name { text-decoration: underline; text-decoration-color: var(--uline); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.portraits-side { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 16px; }
+.portraits-side .person-name { font-size: 16px; }
+
+/* treatment pages */
+.fam-in { display: grid; grid-template-columns: 5fr 7fr; gap: 72px; align-items: start; }
+.fam-flip .fam-pic { order: 2; }
+.fam-pic { aspect-ratio: 4 / 5; overflow: hidden; }
+.fam-pic picture { display: block; height: 100%; }
+.fam-pic img { width: 100%; height: 100%; object-fit: cover; }
+.fam-txt h2 a { color: var(--head); text-decoration: none; }
+.fam-txt h2 a:hover { text-decoration: underline; text-decoration-color: var(--uline); text-decoration-thickness: 3px; text-underline-offset: .15em; }
+.fam-txt .muted { margin-top: 20px; }
+.note-sec { padding: 0 0 var(--band); }
+.care-sec-in, .article-in { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 72px; align-items: start; }
+.care-rows { display: grid; gap: 14px; }
+.care-row a { display: block; padding: 28px 32px; text-decoration: none; color: var(--fg); background: var(--fill); border-radius: var(--r-card); transition: background var(--t), color var(--t); }
+.care-row a:hover { background: var(--indigo); color: #FFFFFF; }
+.care-row h2 { font-size: clamp(24px, 2.4vw, 32px); line-height: 1.2; margin-bottom: 8px; letter-spacing: 0; color: var(--indigo); }
+.care-row a:hover h2, .care-row a:hover .muted { color: #FFFFFF; }
+.care-row p { font-size: 18px; font-weight: 500; }
+.care-row a > span { display: block; margin-top: 8px; font-size: 16px; line-height: 1.5; max-width: 40em; }
+.others h2 { margin-bottom: 32px; }
+.others-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.others-list li { border-radius: var(--r-card); padding: 32px; }
+.others-list a { display: block; font-family: var(--disp); font-weight: 700; font-size: 30px; line-height: 1.2; letter-spacing: -.02em; text-decoration: none; margin-bottom: 8px; }
+.others-list a:hover { text-decoration: underline; text-decoration-color: var(--neon); }
+.others-list span { display: block; color: var(--mute); font-size: 16px; line-height: 1.5; }
+.practical { display: grid; gap: 10px; margin-top: 12px; }
+.practical > div { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 20px; padding: 21px 26px 15px; background: var(--fill); border-radius: 18px; }
+.practical dd { max-width: 60ch; }
+
+/* faq, an indigo band */
+.faq-in { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
+.faq-list { display: grid; gap: 10px; }
+.faq details { background: var(--fill); border-radius: 20px; padding: 0 28px; }
+.faq summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; cursor: pointer; padding: 22px 0; font-family: var(--disp); font-weight: 700; font-size: clamp(19px, 1.7vw, 22px); line-height: 1.3; list-style: none; color: #FFFFFF; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 12px; height: 12px; border-right: 3px solid var(--neon-soft); border-bottom: 3px solid var(--neon-soft); transform: rotate(45deg); margin-right: 6px; transition: transform var(--t) var(--ease); }
+.faq details[open] summary::after { transform: rotate(-135deg); }
+.faq-a { padding: 0 60px 26px 0; }
+
+/* video placeholder */
+.video-slot { position: relative; margin: 2.6rem 0 0; overflow: hidden; display: grid; --play: var(--indigo); }
+.video-slot picture, .video-txt { grid-area: 1 / 1; }
+.video-slot picture { aspect-ratio: 16 / 9; display: block; }
+.video-slot img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.6) brightness(.5); }
+.video-txt { align-self: end; display: flex; flex-direction: column; padding: 28px 32px; color: #FFFFFF; max-width: 60ch; }
+.video-txt b { order: 0; display: block; font-family: var(--disp); font-size: 22px; line-height: 1.25; margin-bottom: 8px; }
+.video-txt p { order: 1; font-size: 16px; }
+.video-txt .video-k { order: 2; font-size: 14px; font-weight: 700; margin-top: 10px; color: var(--neon-soft); }
+.video-play { grid-area: 1 / 1; place-self: center; width: 76px; height: 76px; border-radius: 50%; background: var(--neon); position: relative; }
+.video-play::after { content: ""; position: absolute; left: 31px; top: 23px; border-left: 21px solid var(--indigo); border-top: 15px solid transparent; border-bottom: 15px solid transparent; }
+
+/* team page rows and profile */
+.team-rows { display: grid; gap: 20px; }
+.team-row { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; padding: 28px; border-radius: var(--r-card); align-items: center; }
+.team-pic { display: block; }
+.team-txt h2 { width: fit-content; max-width: 100%; font-size: clamp(28px, 3vw, 40px); }
+.team-txt h2 a { color: #FFFFFF; text-decoration: none; }
+.team-txt h2 a:hover { text-decoration: underline; text-decoration-color: var(--neon); text-decoration-thickness: 3px; text-underline-offset: .15em; }
+.team-role { color: var(--accent); font-weight: 700; margin: 6px 0 16px; line-height: 1.4; }
+.team-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; margin-top: 24px; max-width: 640px; }
+.team-meta dt { color: var(--mute); font-weight: 700; }
+.profile { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 72px; align-items: start; }
+.profile-pic { max-width: 380px; }
+.profile h1 { font-size: clamp(34px, 4.2vw, 58px); }
+.profile .team-role { margin: 10px 0 24px; font-size: 19px; }
+.profile .prose h2 { color: #FFFFFF; }
+.profile .side-h { margin-top: 36px; }
+.profile .small { margin-top: 32px; }
+
+/* first visit page */
+.vsteps-in { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 72px; align-items: start; }
+.vsteps { display: grid; gap: 14px; }
+.vstep { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 28px 32px; background: var(--fill); border-radius: var(--r-card); }
+.vstep .num { font-size: clamp(24px, 2.4vw, 30px); line-height: 1.2; }
+.vstep > div { display: flex; flex-direction: column; }
+.vstep h2 { order: 0; font-size: clamp(24px, 2.4vw, 30px); line-height: 1.2; margin: 0 0 6px; letter-spacing: 0; }
+.vstep p { order: 1; }
+.vstep .vstep-k { order: 2; align-self: flex-start; margin: 14px 0 0; background: var(--neon-soft); color: var(--indigo); font-size: 14px; font-weight: 700; line-height: 1.3; padding: 6px 14px; border-radius: var(--r); }
+.philo-in { display: grid; grid-template-columns: 7fr 5fr; gap: 72px; align-items: center; }
+.philo .statement { text-decoration-line: underline; text-decoration-color: var(--neon); text-decoration-thickness: .08em; text-underline-offset: .18em; text-decoration-skip-ink: none; }
+.philo-pic { aspect-ratio: 4 / 5; overflow: hidden; }
+.philo-pic picture { display: block; height: 100%; }
+.philo-pic img { width: 100%; height: 100%; object-fit: cover; }
+
+/* contact */
+.ccols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.ccol { border-radius: var(--r-card); padding: 40px; }
+.ccol h2 { margin-bottom: 24px; }
+.ccol .acts { margin-top: 28px; }
+.form-in { display: grid; grid-template-columns: 5fr 7fr; gap: 72px; align-items: start; }
+.form-side h2 { margin-bottom: 14px; }
+.form-side .link { color: #FFFFFF; }
+.form { border-radius: var(--r-card); padding: 40px; }
+.field { margin-top: 20px; }
+.field:first-child { margin-top: 0; }
+.field label, .field-label { display: block; font-weight: 700; font-size: 16px; line-height: 1.4; margin-bottom: 8px; color: var(--indigo); }
+.field input, .field select, .field textarea { width: 100%; font: inherit; color: #000000; background: #FFFFFF; border: 2px solid var(--olive); border-radius: 16px; padding: 16px 20px; min-height: 54px; }
+.field textarea { resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--indigo); outline: 3px solid var(--indigo); outline-offset: 1px; }
+.form .btn { margin-top: 28px; }
+.form-ok { margin-top: 16px; color: var(--indigo); font-weight: 700; }
+
+/* patient form */
+.form-wrap { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 56px; align-items: start; }
+.form-steps { position: sticky; top: 110px; display: grid; gap: 6px; }
+.form-steps li { display: flex; align-items: baseline; gap: 10px; padding: 11px 18px 9px; border-radius: var(--r); font-weight: 500; line-height: 1.4; color: var(--mute); }
+.form-steps li span { font-weight: inherit; font-size: inherit; line-height: inherit; color: inherit; flex: none; font-variant-numeric: tabular-nums; }
+.form-steps li span::after { content: "."; }
+.form-steps li[aria-current] { background: var(--indigo); color: #FFFFFF; font-weight: 700; }
+.form-steps li.done { cursor: pointer; background: var(--neon-soft); color: var(--indigo); font-weight: 700; }
+.pform { background: var(--fill); border-radius: var(--r-card); padding: 40px; }
+.pform { display: flex; flex-direction: column; }
+.pform fieldset { border: 0; padding: 0; margin: 0; min-width: 0; order: 1; }
+.pform legend:focus-visible, .pform legend:focus { outline: none; }
+.pform legend { font-family: var(--disp); font-weight: 700; font-size: clamp(24px, 2.4vw, 30px); line-height: 1.2; color: var(--indigo); margin-bottom: 24px; padding: 0; }
+.form-progress { order: 2; font-size: 16px; font-weight: 700; line-height: 1.4; margin-top: 28px; color: var(--indigo); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 24px; }
+.grid2 .field { margin-top: 0; }
+.span2 { grid-column: span 2; }
+.choice { display: flex; flex-wrap: wrap; gap: 10px; }
+.choice label { position: relative; margin: 0; }
+.choice input { position: absolute; opacity: 0; inset: 0; width: 100%; min-height: 0; }
+.choice span { display: inline-block; padding: 13px 22px 11px; font-weight: 500; line-height: 1.3; cursor: pointer; background: #FFFFFF; border-radius: var(--r); color: #000000; }
+.choice input:checked + span { background: var(--indigo); color: #FFFFFF; }
+.choice input:focus-visible + span { outline: 3px solid var(--indigo); outline-offset: 2px; }
+.hint { font-size: 15px; line-height: 1.5; margin-top: 6px; color: var(--mute); }
+.avs-check, .err { font-size: 15px; margin-top: 6px; font-weight: 700; }
+.avs-check { color: var(--indigo); }
+.err { color: #000000; }
+.field input.good { border-color: var(--indigo); box-shadow: inset 0 0 0 1px var(--indigo); }
+.field input.bad { border-color: #000000; box-shadow: inset 0 0 0 1px #000000; }
+.chk { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; cursor: pointer; }
+.chk input { width: 22px; height: 22px; min-height: 0; margin-top: 2px; flex: none; accent-color: var(--indigo); }
+.recap { display: grid; gap: 0; margin-bottom: 28px; }
+.recap div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 20px; background: #FFFFFF; border-radius: 14px; }
+.recap { gap: 8px; }
+.recap dt { font-size: 15px; }
+.recap dd.empty { color: var(--mute); }
+.consent { margin-top: 32px; }
+.consent .grid2 { margin-top: 20px; }
+.form-nav { order: 3; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; align-items: center; }
+.link-btn { border: 0; background: none; font: inherit; color: var(--indigo); cursor: pointer; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; margin-left: auto; padding: 8px; }
+.form-status { order: 4; font-size: 15px; margin-top: 10px; min-height: 1.4em; }
+@media print { .top, .dock, .foot, .form-nav, .form-steps, .phero .acts, .form-status { display: none !important; } .pform .fstep { display: block !important; } .pform fieldset[hidden] { display: block !important; } }
+
+/* motion: no scroll animation of our own, only hover and focus transitions */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
+}
+
+/* responsive */
+@media (max-width: 1100px) {
+  :root { --band: 80px; --hh: 68px; }
+  .nav, .top-cta { display: none; }
+  .burger { display: block; }
+  .top-in { min-height: 68px; }
+  .care-sec-in, .article-in, .vsteps-in, .loc-facts-in { grid-template-columns: minmax(0, 1fr); gap: 48px; }
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .portraits { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .thc-grid { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .posts { grid-template-columns: 1fr 1fr; }
+  .form-wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .form-steps { position: static; display: flex; flex-wrap: wrap; }
+  .form-steps li { padding: 9px 14px 7px; font-size: 15px; }
+  .hfam-in, .hfam-flip .hfam-in { gap: 48px; }
+}
+@media (max-width: 900px) {
+  :root { --band: 72px; }
+  .about-txt, .hfam-in, .hfam-flip .hfam-in, .sec-head-split, .loc-grid, .visite-in, .close-in, .phero-img .phero-in, .phero-side .phero-in,
+  .phero-urg .phero-in, .urg-in, .vital-in, .ccols, .form-in, .faq-in, .fam-in, .profile, .philo-in, .cab-contact-in, .trust-grid, .fam-list { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .about-txt { gap: 0; }
+  .about-txt .statement { grid-column: 1; grid-row: auto; padding: 32px 28px; margin-top: 36px; }
+  .about-txt .lead { margin-top: 20px; }
+  .about-diff-h { margin-top: 56px; }
+  .hfam-visual, .hfam-flip .hfam-visual { width: 72px; padding: 14px; }
+  .fam-flip .fam-pic { order: 0; }
+  .fam-pic, .philo-pic { aspect-ratio: 4 / 3; }
+  .visite-pic { align-self: auto; aspect-ratio: 4 / 3; min-height: 0; }
+  .phero { padding: 40px 0 56px; }
+  .phero-side .phero-in { gap: 28px; }
+  .icon-panel { width: 72px; padding: 14px; border-radius: 22px; }
+  .team-row { grid-template-columns: 200px minmax(0, 1fr); gap: 28px; }
+  .profile-pic { max-width: 300px; }
+  .others-list, .posts, .posts-big { grid-template-columns: 1fr; }
+  .gallery .g1, .gallery .g2, .gallery .g3, .gallery .g4 { grid-column: span 12; }
+  .gallery .g1 img { aspect-ratio: 4 / 3; }
+  .gallery .g2 img, .gallery .g3 img { aspect-ratio: 16 / 10; min-height: 0; }
+  .map { aspect-ratio: 4 / 3; }
+  .close .acts { align-items: stretch; }
+  .dock { display: grid; grid-template-columns: 1fr 1.7fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; background: #FFFFFF; box-shadow: 0 -8px 24px rgba(43, 58, 103, .1); padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); max-width: 100%; }
+  .dock a { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 48px; padding-inline: 6px; border-radius: var(--r); text-decoration: none; font-weight: 700; font-size: 14px; line-height: 1.2; text-align: center; color: var(--indigo); background: var(--btn2-bg); }
+  .dock a.dock-main { background: var(--indigo); color: #FFFFFF; }
+  body { padding-bottom: 76px; }
+  .foot { padding-bottom: 72px; }
+}
+@media (max-width: 700px) {
+  :root { --band: 56px; --pad-x: 20px; }
+  .hero.hero-cover h1 { font-size: clamp(34px, 9.4vw, 42px); max-width: none; }
+  .acts .btn { width: 100%; }
+  .trust-item { padding: 26px 24px; }
+  .about-txt .statement { padding: 28px 24px; }
+  .loc { padding: 16px 16px 26px; }
+  .loc-grid { gap: 20px; }
+  .care-list a, .facts > div, .facts-tight > div, .practical > div, .recap div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .thc-grid { grid-auto-flow: column; grid-auto-columns: 54vw; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: var(--pad-x); padding: 0 var(--pad-x) 6px; margin: 0 calc(var(--pad-x) * -1); }
+  .thc { scroll-snap-align: start; }
+  .portraits { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .team-row { grid-template-columns: minmax(0, 1fr); padding: 24px; gap: 24px; }
+  .team-pic { max-width: 220px; }
+  .team-meta { grid-template-columns: 1fr; }
+  .steps li, .vstep { grid-template-columns: 44px minmax(0, 1fr); gap: 12px; }
+  .vstep { padding: 24px; }
+  .side, .ccol, .form, .pform, .urg-in > div, .urg-tel { padding: 26px 24px; }
+  .table-wrap { padding: 24px 20px; }
+  .cmp tbody th { width: 110px; }
+  .care-row a { padding: 24px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .span2 { grid-column: span 1; }
+  .faq-a { padding-right: 0; }
+  .foot-grid { grid-template-columns: 1fr; }
+  .foot { padding-top: 64px; }
+  .video-slot { grid-template-rows: auto auto; }
+  .video-play { place-self: center; }
+  .video-txt { grid-area: 2 / 1; align-self: start; max-width: none; background: var(--indigo); padding: 20px; }
+  .phero-banner-pic { margin-top: 36px; }
+  .phero-team .phero-banner-pic { margin-top: 36px; }
+}
+@media (max-width: 430px) { .dock { grid-template-columns: 1fr 1.6fr; } .dock a:last-child { display: none; } }
+@media (min-width: 901px) {
+  .nav .sub-btn { height: 44px; }
+}
+
+/* --- round 2 ------------------------------------------------------------------
+   One photo, one place: a slot whose photo is used elsewhere renders an illustration tile.
+   On a light page the tile is indigo with a neon drawing, as base.css sets it. On an indigo band
+   or card it flips to a neon tile with an indigo drawing so it stays visible. */
+.ill-tile { aspect-ratio: auto; min-height: 100%; border-radius: 0; }
+.phero .ill-tile, .gallery-sec .ill-tile, .fam.band-tint .ill-tile, .loc .ill-tile, .philo .ill-tile { background: var(--neon-soft); }
+.phero .ill-tile .ill, .gallery-sec .ill-tile .ill, .fam.band-tint .ill-tile .ill, .loc .ill-tile .ill, .philo .ill-tile .ill { --ill-ink: var(--indigo); }
+.visite-pic .ill-tile, .fam-pic .ill-tile, .philo-pic .ill-tile, .phero-pic .ill-tile, .loc-pic .ill-tile, .profile-pic .ill-tile { height: 100%; }
+.gallery .ill-tile { flex: 1; min-height: 260px; }
+.post-ill { height: 120px; min-height: 0; aspect-ratio: auto; margin-bottom: 20px; }
+.post a:hover .post-ill { background: var(--black); }
+.blog-lead-pic { margin: 0 0 48px; }
+.blog-lead-pic picture { aspect-ratio: 21 / 9; }
+.blog-lead-pic img { object-position: 50% 88%; }
+.blog-sec .posts { margin-top: 0; }
+@media (max-width: 700px) { .blog-lead-pic picture { aspect-ratio: 4 / 3; } }
+/* Visit band on home is black, the one place the palette's black carries a whole section. */
+@media (min-width: 901px) { .visite-in { grid-template-columns: 5fr 6fr; } }
+.visite-txt h2 { margin-bottom: 36px; }
+.visite-txt .link { color: #FFFFFF; }
+/* Team page: the cover is followed directly by the profile rows. */
+.team-sec { padding-top: var(--band); }
+
+/* The video placeholder keeps its play button and caption; a tile standing in for its still shows no drawing behind them. */
+.video-slot .ill-tile { grid-area: 1 / 1; aspect-ratio: 16 / 9; min-height: 0; }
+.video-slot .ill-tile .ill { display: none; }
+
+/* --- feature openers: a large photo with the headline panel overlapping its left edge ---
+   Geometry comes from base.css. The panel is an indigo colour block with white type and a neon
+   primary button, high contrast, never over faces. Pages without a free photo keep the typographic
+   opener with a small mark. */
+.phero.phero-feature { --feature-box: var(--indigo); --feature-ink: #FFFFFF; }
+/* The panel keeps the shared geometry (it reaches 48px over the photo); only its padding and type are set here. */
+.phero.phero-feature .phero-txt { padding: 44px 52px 48px; }
+.phero.phero-feature h1 { font-size: clamp(32px, 3.5vw, 50px); line-height: 1.1; margin-bottom: 20px; }
+.phero.phero-feature .lead { font-size: clamp(18px, 1.4vw, 20px); opacity: 1; }
+.phero.phero-feature .btn.btn-line { background: rgba(255, 255, 255, .16); border-color: transparent; color: #FFFFFF; }
+.phero.phero-feature .btn.btn-line:hover { background: #FFFFFF; border-color: #FFFFFF; color: var(--indigo); }
+@media (max-width: 900px) { .phero.phero-feature .phero-txt, .phero.phero-feature.phero-feature-tall .phero-txt { padding: 33px 24px 27px; } }
+/* Typographic opener (photo already used elsewhere): bigger type, the mark sits as a neon block. */
+.phero:not(.phero-feature):not(.phero-urg) h1 { font-size: clamp(36px, 4.8vw, 64px); max-width: 18ch; }
+.phero:not(.phero-feature) .phero-aside { align-self: start; }
+
+
+/* --- final round: Moderne 1, Cabinet -------------------------------------------------
+   Big photos at their own shape, stronger section colour, three CSS-only arrivals. */
+
+/* Portraits are shared cut-outs on rounded colour backgrounds: soft Neon Ice on indigo, white on neon. */
+.hero-cover, .team-home, .phero, .team-row { --portrait-bg: var(--neon-soft); }
+.team-row:nth-child(4n+2), .team-row:nth-child(4n+3) { --portrait-bg: #FFFFFF; }
+.thc-name { font-size: 19px; }
+
+/* Line drawings sit straight on the section colour: indigo on white, soft neon on indigo. 96px at most. */
+.hfam-visual, .icon-panel, .phero-aside .icon-panel { color: var(--accent); width: 96px; padding: 0; aspect-ratio: auto; }
+.phero-side .phero-in { grid-template-columns: minmax(0, 1fr) 96px; }
+
+/* Treatment families: heading and text on one side, the list of treatments on the other, so the band
+   is filled and nothing sits alone. The mark leads the heading; odd families flip sides. */
+@media (min-width: 901px) {
+  .hfam-in, .hfam-flip .hfam-in { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: 80px; row-gap: 0; align-items: start; }
+  .hfam-txt { display: contents; max-width: none; }
+  .hfam-visual { grid-column: 1; grid-row: 1; margin-bottom: 20px; }
+  .hfam-txt h2 { grid-column: 1; grid-row: 2; }
+  .hfam-txt .fam-line { grid-column: 1; grid-row: 3; }
+  .hfam-txt > p:not(.fam-line) { grid-column: 1; grid-row: 4; }
+  .hfam-txt > a.btn { grid-column: 1; grid-row: 5; justify-self: start; }
+  .hfam-txt .care-list { grid-column: 2; grid-row: 1 / span 6; margin-top: 0; align-self: center; }
+  .hfam-flip .hfam-visual, .hfam-flip .hfam-txt h2, .hfam-flip .hfam-txt .fam-line, .hfam-flip .hfam-txt > p:not(.fam-line), .hfam-flip .hfam-txt > a.btn { grid-column: 2; }
+  .hfam-flip .hfam-txt .care-list { grid-column: 1; }
+}
+.care-list a { grid-template-columns: minmax(0, 1fr); gap: 4px; padding: 18px 24px; }
+
+/* Team page: two columns of cards with a larger portrait each, so the page has no empty half. */
+.team-rows { grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+.team-row { grid-template-columns: 200px minmax(0, 1fr); gap: 32px; padding: 28px; align-items: start; align-content: center; }
+.team-row:nth-child(4n+2), .team-row:nth-child(4n+3) { background: var(--neon-soft); --fg: var(--indigo); --head: var(--indigo); --mute: var(--indigo); --accent: var(--indigo); --link: var(--indigo); --uline: var(--indigo); --focus: var(--indigo); color: var(--indigo); }
+.team-row:nth-child(4n+2) .team-txt h2 a, .team-row:nth-child(4n+3) .team-txt h2 a { color: var(--indigo); }
+.team-row:nth-child(4n+1), .team-row:nth-child(4n) { background: var(--indigo); --fg: #FFFFFF; --head: #FFFFFF; --mute: rgba(255, 255, 255, .84); --accent: var(--neon-soft); --link: #FFFFFF; --uline: var(--neon-mid); --focus: var(--neon); color: #FFFFFF; }
+.team-row:nth-child(4n+1) .team-txt h2 a, .team-row:nth-child(4n) .team-txt h2 a { color: #FFFFFF; }
+.team-row:nth-child(4n+1), .team-row:nth-child(4n) { --portrait-bg: var(--neon-soft); }
+.team-row .team-meta { grid-template-columns: 1fr; gap: 14px; margin-top: 18px; }
+.team-txt h2 { font-size: clamp(26px, 2.4vw, 34px); }
+
+/* Photos: whole, at their own shape, large. */
+@media (min-width: 901px) { .visite-in { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 72px; } }
+.gallery { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px; }
+/* One portrait photo with a wide one beside it, then two landscape photos side by side: each whole at
+   its own shape, no hole beside any of them. */
+.gallery { align-items: start; }
+.gallery .g1 { grid-column: 1 / span 4; grid-row: 1; }
+.gallery .g2 { grid-column: 5 / span 8; grid-row: 1; }
+.gallery .g3 { grid-column: 1 / span 6; grid-row: 2; }
+.gallery .g4 { grid-column: 7 / span 6; grid-row: 2; }
+.gallery picture { flex: none; }
+.gallery picture, .gallery img, .gallery .g1 img, .gallery .g2 img, .gallery .g3 img, .gallery .g4 img { height: auto; aspect-ratio: auto; min-height: 0; object-fit: contain; }
+.loc-pic { aspect-ratio: 3 / 2; }
+.fam-in { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 64px; }
+
+/* Section colour: the blog band takes a neutral Grey Olive wash. */
+.blog-sec.band-tint { background: var(--fill); }
+.post-ill .ill { transition: transform .5s var(--ease); }
+.post a:hover .post-ill .ill { transform: scale(1.18); }
+
+/* Three arrivals in pure CSS, driven by scroll position through view(): photos and blocks rise and
+   fade in once as they enter, and images settle from a 6% zoom inside their own frame (the frame hides
+   the overflow, and none of these photos puts a person at the edge). Nothing is pinned. Disabled for
+   reduced motion and in browsers without scroll-driven animations. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    @keyframes v1-rise { from { opacity: .35; transform: translateY(36px); } to { opacity: 1; transform: none; } }
+    @keyframes v1-settle { from { transform: scale(1.06); } to { transform: none; } }
+    .blog-lead-pic, .visite-pic, .fam-pic, .gallery figure, .loc, .trust-item, .team-row, .post { animation: v1-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+    .loc-pic img, .gallery img, .fam-pic img, .visite-pic img { animation: v1-settle linear both; animation-timeline: view(); animation-range: entry 0% cover 55%; }
+  }
+}
+
+/* Typographic openers (no photo): the title takes the left half in large type and the lead and buttons sit
+   in the right half, so the band is filled by type and colour alone. */
+@media (min-width: 901px) {
+  .phero:not(.phero-feature):not(.phero-urg) .phero-txt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); column-gap: 64px; align-items: start; max-width: none; }
+  .phero:not(.phero-feature):not(.phero-urg) .phero-txt .crumbs { grid-column: 1 / -1; }
+  .phero:not(.phero-feature):not(.phero-urg) .phero-txt h1 { grid-column: 1; grid-row: 2 / span 2; max-width: none; }
+  .phero:not(.phero-feature):not(.phero-urg) .phero-txt .lead { grid-column: 2; grid-row: 2; margin-top: 8px; }
+  .phero:not(.phero-feature):not(.phero-urg) .phero-txt .acts { grid-column: 2; grid-row: 3; margin-top: 28px; }
+}
+
+/* Phones: team cards stack, the portrait stays at its own size, and no-break words may wrap. */
+@media (max-width: 900px) {
+  .team-rows { grid-template-columns: minmax(0, 1fr); }
+  .team-row { grid-template-columns: minmax(0, 1fr); }
+  .team-pic { max-width: 220px; }
+  .nw { white-space: normal; }
+}
+
+/* Client direction: Neon Ice at full or 80% is too loud on large tiles, so the two
+   light trust cards drop to 60%, and the statement loses its neon underline. */
+.trust-item:nth-child(2), .trust-item:nth-child(3) { background: var(--neon-mid); }
+.about-txt .statement { text-decoration: none; }
+
+/* Rounded corner system for this version (client, 2026-10-27): every framed photo and
+   portrait takes the same 24px radius as the cards, so no photo sits square inside or
+   beside a rounded box. Full-bleed header photos stay straight-edged. */
+main :is(picture, img):not(.foot-logo):not(.hero-bg *):not(.phero-feature-pic *), main iframe, .disc, .thc-pic, .team-pic .disc, .disc-big, .profile-pic .disc, main .map { border-radius: 24px !important; }
+main picture { overflow: hidden; }
+
+/* Rounded cards clip their image heads, so a head never shows square corners. */
+.post a, .post, .loc, .loc-link, .others li a { overflow: hidden; }
+.post-ill, .loc-pic, .loc-pic picture, .loc-pic img { border-radius: 0 !important; }
+
+/* New versions, header fade (client, 2026-10-27): white text on the blue fade, deeper behind
+   the text, easing out over 320px and ending 40px before the first person rather than at it. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full:not(.hx-side):not(.hero-light):not(#_):not(#__):not(#___) {
+    --a0: 84%; --a1: 78%; --fw: 320px;
+    --fz: calc(var(--px) * 0.966 + var(--H) * 0.026 - 40px); }
+}
+
+/* New versions use the light header (client, 2026-10-27): a white fade behind dark text,
+   at its strongest behind the text, easing out gradually over 320px and ending 40px before
+   the first person. The second button takes a slightly deeper tint so it holds on white. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:not(.hx-side):not(#_):not(#__) .hero-bg::after { background:
+      linear-gradient(105deg,
+      rgba(255, 255, 255, .94) 0,
+      rgba(255, 255, 255, .9) calc(var(--px) * 0.966 + var(--H) * 0.026 - 360px),
+      rgba(255, 255, 255, .86) calc(var(--px) * 0.966 + var(--H) * 0.026 - 320px),
+      rgba(255, 255, 255, .76) calc(var(--px) * 0.966 + var(--H) * 0.026 - 280px),
+      rgba(255, 255, 255, .62) calc(var(--px) * 0.966 + var(--H) * 0.026 - 240px),
+      rgba(255, 255, 255, .45) calc(var(--px) * 0.966 + var(--H) * 0.026 - 200px),
+      rgba(255, 255, 255, .28) calc(var(--px) * 0.966 + var(--H) * 0.026 - 160px),
+      rgba(255, 255, 255, .14) calc(var(--px) * 0.966 + var(--H) * 0.026 - 120px),
+      rgba(255, 255, 255, .04) calc(var(--px) * 0.966 + var(--H) * 0.026 - 80px),
+      rgba(255, 255, 255, 0) calc(var(--px) * 0.966 + var(--H) * 0.026 - 40px)) !important; }
+  html body .hero.hero-full.hero-light .hero-txt :is(h1, .lead, .crumbs):not(#_) { text-shadow: none !important; }
+  html body .hero.hero-full.hero-light :is(a, button).btn.btn-line:not(#_):not(#__):not(#___) { background: #DCE2EC !important; color: #12263A !important; }
+}
+
+/* Softer light fade on the new versions (client, 2026-10-27): one eased curve over 560px, so the
+   white thins out gradually instead of stopping on a visible edge; its last trace, under 5%,
+   reaches just past the first person. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:not(.hx-side):not(#_):not(#__):not(#___) .hero-bg::after { background: linear-gradient(105deg,
+      rgba(255, 255, 255, 0.92) 0,
+      rgba(255, 255, 255, 0.880) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 560px),
+      rgba(255, 255, 255, 0.870) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 525px),
+      rgba(255, 255, 255, 0.842) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 490px),
+      rgba(255, 255, 255, 0.799) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 455px),
+      rgba(255, 255, 255, 0.743) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 420px),
+      rgba(255, 255, 255, 0.676) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 385px),
+      rgba(255, 255, 255, 0.602) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 350px),
+      rgba(255, 255, 255, 0.522) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 315px),
+      rgba(255, 255, 255, 0.440) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 280px),
+      rgba(255, 255, 255, 0.358) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 245px),
+      rgba(255, 255, 255, 0.278) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 210px),
+      rgba(255, 255, 255, 0.204) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 175px),
+      rgba(255, 255, 255, 0.138) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 140px),
+      rgba(255, 255, 255, 0.081) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 105px),
+      rgba(255, 255, 255, 0.038) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 70px),
+      rgba(255, 255, 255, 0.010) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 35px),
+      rgba(255, 255, 255, 0.000) calc((var(--px) * 0.966 + var(--H) * 0.026 + 40px) - 0px)) !important; }
+}
+
+/* Motion for the modern versions (client, 2026-10-27), only where it helps reading, and only
+   for visitors who have not asked for reduced motion, in browsers with scroll-driven animation:
+   section titles and their introduction rise into place as they enter, care rows come in one
+   after the other so the list reads as a set of choices, the title underline draws itself, and
+   cards and photos answer the pointer with a small lift so their links read as links. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    @keyframes nm-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @keyframes nm-slide { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+    @keyframes nm-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    html body main :is(.sec-head > h2, .sec-head-split h2, .about-txt > h2, .about-txt > .lead, .locs-home-txt > *, .hfam-txt > h2, .hfam-txt > .fam-line, .fam h2, .about-diff-h, .visite-txt > h2, .faq-in > h2) {
+      animation: nm-rise linear both; animation-timeline: view(); animation-range: entry 5% entry 60%; }
+    html body main .care-list > li { animation: nm-slide linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+    html body main .care-list > li:nth-child(2) { animation-range: entry 6% entry 76%; }
+    html body main .care-list > li:nth-child(3) { animation-range: entry 12% entry 82%; }
+    html body main .care-list > li:nth-child(4) { animation-range: entry 18% entry 88%; }
+    html body main .care-list > li:nth-child(n+5) { animation-range: entry 24% entry 94%; }
+    html body main :is(h2)::after { transform-origin: left center; animation: nm-draw linear both; animation-timeline: view(); animation-range: entry 20% entry 80%; }
+    html body main .about-txt > h2::after { transform-origin: center; }
+  }
+  html body main :is(.loc-tile > a, .post > a, .thc > a, .fam-dot, .fam-pic) { transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s cubic-bezier(.2, .7, .2, 1); }
+  html body main :is(.loc-tile-pic, .post .post-ill, .thc-pic, .fam-pic) :is(img, .ill) { transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+  html body main :is(.loc-tile > a, .post > a, .thc > a):hover { transform: translateY(-4px); }
+  html body main :is(.loc-tile > a, .thc > a):hover :is(img) { transform: scale(1.04); }
+  html body main .post > a:hover { box-shadow: 0 14px 30px -18px rgba(18, 38, 58, .35); }
+  html body :is(a, button).btn:not(#_):not(#__) { transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease !important; }
+  html body :is(a, button).btn:not(#_):not(#__):hover { transform: translateY(-1px); }
+}
+
+/* Light header fade, readable to the last word (client, 2026-10-27): the white holds at
+   full strength across the whole text column, then eases out over 380px, so no line of the
+   introduction sits on the darker parts of the photo. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:not(.hx-side):not(#_):not(#__):not(#___):not(#____) .hero-bg::after { background: linear-gradient(105deg,
+      rgba(255, 255, 255, 0.95) 0,
+      rgba(255, 255, 255, 0.93) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px)),
+      rgba(255, 255, 255, 0.912) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 32px),
+      rgba(255, 255, 255, 0.861) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 63px),
+      rgba(255, 255, 255, 0.785) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 95px),
+      rgba(255, 255, 255, 0.689) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 127px),
+      rgba(255, 255, 255, 0.580) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 158px),
+      rgba(255, 255, 255, 0.465) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 190px),
+      rgba(255, 255, 255, 0.350) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 222px),
+      rgba(255, 255, 255, 0.241) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 253px),
+      rgba(255, 255, 255, 0.145) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 285px),
+      rgba(255, 255, 255, 0.069) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 317px),
+      rgba(255, 255, 255, 0.018) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 348px),
+      rgba(255, 255, 255, 0.000) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 380px)) !important; }
+}
+
+/* Light header fade that never reaches the people (client, 2026-10-27): it is zero 40px before
+   the first person at every width, holds behind the text until 320px before that point, and
+   peaks at 86% white instead of 93%. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:not(.hx-side):has(img[src*="equipe-panorama"]):not(#_):not(#__):not(#___):not(#____):not(#_____) .hero-bg::after { background: linear-gradient(105deg,
+      rgba(255, 255, 255, 0.90) 0,
+      rgba(255, 255, 255, 0.86) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px)),
+      rgba(255, 255, 255, 0.843) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.0833),
+      rgba(255, 255, 255, 0.796) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.1667),
+      rgba(255, 255, 255, 0.726) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.2500),
+      rgba(255, 255, 255, 0.637) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.3333),
+      rgba(255, 255, 255, 0.537) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.4167),
+      rgba(255, 255, 255, 0.430) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.5000),
+      rgba(255, 255, 255, 0.323) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.5833),
+      rgba(255, 255, 255, 0.223) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.6667),
+      rgba(255, 255, 255, 0.134) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.7500),
+      rgba(255, 255, 255, 0.064) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.8333),
+      rgba(255, 255, 255, 0.017) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.9167),
+      rgba(255, 255, 255, 0.000) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 1.0000)) !important; }
+}
+
+/* Soft white glow behind the header text on the team photo (client, 2026-10-27): the fade stops
+   before the first person, and the text keeps its contrast from a blurred white wash that sits
+   only behind the text block, not across the photo. */
+@media (min-width: 1100px) {
+  html body .hero.hero-full.hero-light:has(img[src*="equipe-panorama"]) .hero-txt:not(#_) { isolation: isolate; }
+  html body .hero.hero-full.hero-light:has(img[src*="equipe-panorama"]) .hero-txt:not(#_)::before { content: ""; position: absolute; z-index: -1; inset: -28px -36px -28px -48px; background: rgba(255, 255, 255, .8); filter: blur(26px); border-radius: 48px; pointer-events: none; }
+}
