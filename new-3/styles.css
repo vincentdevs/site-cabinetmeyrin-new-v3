@@ -911,7 +911,12 @@ html body .visite .visite-txt .steps > li { justify-content: flex-start !importa
    now one column of links in the brand ink, divided by hairlines, each title followed by an
    arrow, on a near-solid white fade. The second line repeated the title with the town name,
    so it is left out here; it stays on the care pages themselves. */
-html body .hfam:has(.hfam-visual img)::after { background: linear-gradient(to right, rgba(255, 255, 255, .97) 0%, rgba(255, 255, 255, .95) 40%, rgba(255, 255, 255, .6) 50%, rgba(255, 255, 255, 0) 60%) !important; }
+html body .hfam:has(.hfam-visual img)::after { background: linear-gradient(to right,
+  rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, .92) 15%,
+  rgba(255, 255, 255, .86) 25%, rgba(255, 255, 255, .76) 35%,
+  rgba(255, 255, 255, .61) 42%, rgba(255, 255, 255, .42) 49%,
+  rgba(255, 255, 255, .23) 54%, rgba(255, 255, 255, .08) 58%,
+  rgba(255, 255, 255, 0) 60%) !important; }
 html body .hfam:has(.hfam-visual img) .hfam-txt > .care-list { display: block !important; margin: 28px 0 0 !important; padding: 0 !important; border-top: 1px solid rgba(18, 38, 58, .16) !important; max-width: 520px !important; grid-template-columns: none !important; }
 html body .hfam:has(.hfam-visual img) .care-list > li { display: block !important; margin: 0 !important; border-bottom: 1px solid rgba(18, 38, 58, .16) !important; background: none !important; }
 html body .hfam:has(.hfam-visual img) .care-list > li > a { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 16px !important; padding: 15px 2px !important; background: none !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; text-decoration: none !important; }
@@ -2157,52 +2162,47 @@ main picture { overflow: hidden; }
   html body :is(a, button).btn:not(#_):not(#__):hover { transform: translateY(-1px); }
 }
 
-/* Light header fade, readable to the last word (client, 2026-10-27): the white holds at
-   full strength across the whole text column, then eases out over 380px, so no line of the
-   introduction sits on the darker parts of the photo. */
+/* Shared light header fade: keep the photo's clear edge in place, with a longer
+   transition toward the left so the image stays visible beneath readable dark text. */
 @media (min-width: 1100px) {
-  html body .hero.hero-full.hero-light:not(.hx-side):not(#_):not(#__):not(#___):not(#____) .hero-bg::after { background: linear-gradient(105deg,
-      rgba(255, 255, 255, 0.95) 0,
-      rgba(255, 255, 255, 0.93) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px)),
-      rgba(255, 255, 255, 0.912) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 32px),
-      rgba(255, 255, 255, 0.861) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 63px),
-      rgba(255, 255, 255, 0.785) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 95px),
-      rgba(255, 255, 255, 0.689) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 127px),
-      rgba(255, 255, 255, 0.580) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 158px),
-      rgba(255, 255, 255, 0.465) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 190px),
-      rgba(255, 255, 255, 0.350) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 222px),
-      rgba(255, 255, 255, 0.241) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 253px),
-      rgba(255, 255, 255, 0.145) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 285px),
-      rgba(255, 255, 255, 0.069) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 317px),
-      rgba(255, 255, 255, 0.018) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 348px),
-      rgba(255, 255, 255, 0.000) calc(((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 24px) + 380px)) !important; }
+  html body .hero.hero-full.hero-light:not(.hx-side):not(#_):not(#__):not(#___):not(#____) .hero-bg::after {
+    --header-fade-end: calc((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26 + 404px);
+    --header-fade-span: 620px;
+    background: linear-gradient(105deg,
+      rgba(255, 255, 255, .92) 0,
+      rgba(255, 255, 255, .90) calc(var(--header-fade-end) - var(--header-fade-span)),
+      rgba(255, 255, 255, .88) calc(var(--header-fade-end) - var(--header-fade-span) * .9),
+      rgba(255, 255, 255, .84) calc(var(--header-fade-end) - var(--header-fade-span) * .8),
+      rgba(255, 255, 255, .77) calc(var(--header-fade-end) - var(--header-fade-span) * .7),
+      rgba(255, 255, 255, .67) calc(var(--header-fade-end) - var(--header-fade-span) * .6),
+      rgba(255, 255, 255, .54) calc(var(--header-fade-end) - var(--header-fade-span) * .5),
+      rgba(255, 255, 255, .40) calc(var(--header-fade-end) - var(--header-fade-span) * .4),
+      rgba(255, 255, 255, .26) calc(var(--header-fade-end) - var(--header-fade-span) * .3),
+      rgba(255, 255, 255, .13) calc(var(--header-fade-end) - var(--header-fade-span) * .2),
+      rgba(255, 255, 255, .04) calc(var(--header-fade-end) - var(--header-fade-span) * .1),
+      rgba(255, 255, 255, 0) var(--header-fade-end)) !important;
+  }
+  html body .hero.hero-full.hero-light:not(.hx-side):has(img[src*="equipe-panorama"]):not(#_):not(#__):not(#___):not(#____):not(#_____) .hero-bg::after {
+    --header-fade-end: calc(var(--px) * 0.966 + var(--H) * 0.026 - 40px);
+  }
 }
 
-/* Light header fade that never reaches the people (client, 2026-10-27): it is zero 40px before
-   the first person at every width, holds behind the text until 320px before that point, and
-   peaks at 86% white instead of 93%. */
-@media (min-width: 1100px) {
-  html body .hero.hero-full.hero-light:not(.hx-side):has(img[src*="equipe-panorama"]):not(#_):not(#__):not(#___):not(#____):not(#_____) .hero-bg::after { background: linear-gradient(105deg,
-      rgba(255, 255, 255, 0.90) 0,
-      rgba(255, 255, 255, 0.86) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px)),
-      rgba(255, 255, 255, 0.843) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.0833),
-      rgba(255, 255, 255, 0.796) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.1667),
-      rgba(255, 255, 255, 0.726) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.2500),
-      rgba(255, 255, 255, 0.637) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.3333),
-      rgba(255, 255, 255, 0.537) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.4167),
-      rgba(255, 255, 255, 0.430) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.5000),
-      rgba(255, 255, 255, 0.323) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.5833),
-      rgba(255, 255, 255, 0.223) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.6667),
-      rgba(255, 255, 255, 0.134) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.7500),
-      rgba(255, 255, 255, 0.064) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.8333),
-      rgba(255, 255, 255, 0.017) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 0.9167),
-      rgba(255, 255, 255, 0.000) calc(min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px) + ((var(--px) * 0.966 + var(--H) * 0.026 - 40px) - (min((var(--tl) + var(--col)) * 0.966 + var(--H) * 0.26, (var(--px) * 0.966 + var(--H) * 0.026 - 40px) - 320px))) * 1.0000)) !important; }
-}
-
-/* Soft white glow behind the header text on the team photo (client, 2026-10-27): the fade stops
-   before the first person, and the text keeps its contrast from a blurred white wash that sits
-   only behind the text block, not across the photo. */
+/* A broad, low-opacity glow protects the panorama text without a tight white panel. */
 @media (min-width: 1100px) {
   html body .hero.hero-full.hero-light:has(img[src*="equipe-panorama"]) .hero-txt:not(#_) { isolation: isolate; }
-  html body .hero.hero-full.hero-light:has(img[src*="equipe-panorama"]) .hero-txt:not(#_)::before { content: ""; position: absolute; z-index: -1; inset: -28px -36px -28px -48px; background: rgba(255, 255, 255, .8); filter: blur(26px); border-radius: 48px; pointer-events: none; }
+  html body .hero.hero-full.hero-light:has(img[src*="equipe-panorama"]) .hero-txt:not(#_)::before {
+    content: ""; position: absolute; z-index: -1; inset: -48px -80px -48px -100px;
+    background: rgba(255, 255, 255, var(--header-text-glow, .45)); filter: blur(72px); border-radius: 120px; pointer-events: none;
+  }
+}
+/* At narrow desktop widths the existing photo crop sits beneath the text. Keep a
+   stronger feathered backing there while the wider layouts use the lighter glow. */
+@media (min-width: 1100px) and (max-width: 1199px) {
+  .hero.hero-light { --header-text-glow: .78; }
+}
+@media (min-width: 1200px) and (max-width: 1279px) {
+  .hero.hero-light { --header-text-glow: .64; }
+}
+@media (min-width: 1280px) and (max-width: 1359px) {
+  .hero.hero-light { --header-text-glow: .54; }
 }
